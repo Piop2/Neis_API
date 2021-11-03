@@ -58,16 +58,28 @@ class SchoolMeal:
         self.data = meal_data
 
     @property
+    def region_code(self):
+        return self.data["ATPT_OFCDC_SC_CODE"]
+
+    @property
+    def region(self):
+        return self.data["ATPT_OFCDC_SC_NM"]
+
+    @property
+    def school_code(self):
+        return self.data["SD_SCHUL_CODE"]
+
+    @property
+    def school(self):
+        return self.data["SCHUL_NM"]
+
+    @property
     def name(self):
         return self.data["MMEAL_SC_NM"]
 
     @property
     def date(self):
         return self.data["MLSV_YMD"]
-
-    @property
-    def number_of_meal(self):
-        return self.data["MLSV_FGR"]
 
     @property
     def meal(self):
