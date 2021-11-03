@@ -44,11 +44,11 @@ def get_meal_data(key, atpt_ofcdc_sc_code, sd_schul_code, mmeal_sc_code=None, ml
         status_code = request_json["RESULT"]["CODE"]
 
     if status_code == "ERROR-300":
-        raise IncorrectParamError()
+        raise Error300()
     elif status_code == "ERROR-290":
-        raise InvalidKeyError()
+        raise Error290()
     elif status_code == "INFO-200":
-        raise DataNotFoundError()
+        raise Info200()
 
     meals = [SchoolMeal(data) for data in request_json["mealServiceDietInfo"][1]["row"]]
 
