@@ -5,3 +5,7 @@ class IncorrectParamError(Exception):
 class InvalidKeyError(Exception):
     def __init__(self):
         super().__init__("인증키가 유효하지 않습니다. 인증키가 없는 경우, 홈페이지에서 인증키를 신청하십시오.")
+
+class DataNotFoundError(Exception):
+    def __init__(self):
+        super().__init__("해당하는 데이터가 없습니다.")
