@@ -47,6 +47,20 @@ def get_meal_data(key, atpt_ofcdc_sc_code, sd_schul_code, mmeal_sc_code=None, ml
         raise Error300()
     elif status_code == "ERROR-290":
         raise Error290()
+    elif status_code == "ERROR-333":
+        raise Error333()
+    elif status_code == "ERROR-336":
+        raise Error336()
+    elif status_code == "ERROR-337":
+        raise Error337()
+    elif status_code == "ERROR-500":
+        raise Error500()
+    elif status_code == "ERROR-600":
+        raise Error600()
+    elif status_code == "ERROR-601":
+        raise Error601()
+    elif status_code == "INFO-300":
+        raise Info300()
     elif status_code == "INFO-200":
         raise Info200()
 
