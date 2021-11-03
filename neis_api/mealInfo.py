@@ -60,41 +60,45 @@ class SchoolMeal:
         self.data = meal_data
 
     @property
-    def region_code(self):
+    def atpt_ofcdc_sc_code(self):
         return self.data["ATPT_OFCDC_SC_CODE"]
 
     @property
-    def region(self):
+    def atpt_ofcdc_sc_nm(self):
         return self.data["ATPT_OFCDC_SC_NM"]
 
     @property
-    def school_code(self):
+    def sd_schul_code(self):
         return self.data["SD_SCHUL_CODE"]
 
     @property
-    def school(self):
+    def schul_nm(self):
         return self.data["SCHUL_NM"]
 
     @property
-    def name(self):
+    def mmeal_sc_code(self):
+        return self.data["MMEAL_SC_CODE"]
+
+    @property
+    def mmeal_sc_nm(self):
         return self.data["MMEAL_SC_NM"]
 
     @property
-    def date(self):
+    def mlsv_ymd(self):
         return self.data["MLSV_YMD"]
 
     @property
-    def meal(self):
+    def ddish_nm(self):
         return self.data["DDISH_NM"].replace("<br/>", "\n")
 
     @property
-    def origin(self):
+    def orplc_info(self):
         return self.data["ORPLC_INFO"].replace("<br/>", "\n")
 
     @property
-    def calorie(self):
-        return float(self.data["CAL_INFO"].split()[0])
+    def cal_info(self):
+        return self.data["CAL_INFO"]
 
     @property
-    def nutrition(self):
+    def ntr_info(self):
         return self.data["NTR_INFO"].replace("<br/>", "\n")
