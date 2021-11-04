@@ -18,7 +18,7 @@ def get_meal_data(key, atpt_ofcdc_sc_code, sd_schul_code, mmeal_sc_code=None, ml
     :param mlsv_to_ymd: 급식종료일자
     :param pindex:페이지 위치
     :param psize:페이지 당 신청 숫자
-    :return:급식
+    :return:검색된 모든 급식
     """
 
     params = {
@@ -64,9 +64,7 @@ def get_meal_data(key, atpt_ofcdc_sc_code, sd_schul_code, mmeal_sc_code=None, ml
     elif status_code == "INFO-200":
         raise Info200()
 
-    meals = [SchoolMeal(data) for data in request_json["mealServiceDietInfo"][1]["row"]]
-
-    return meals
+    return tuple(SchoolMeal(data) for data in request_json["mealServiceDietInfo"][1]["row"])
 
 
 class SchoolMeal:
@@ -75,44 +73,84 @@ class SchoolMeal:
 
     @property
     def atpt_ofcdc_sc_code(self):
+        """
+        :return: 시도교육청코드
+        """
         return self.data["ATPT_OFCDC_SC_CODE"]
 
     @property
     def atpt_ofcdc_sc_nm(self):
+        """
+        :return: 시도교육청명
+        """
         return self.data["ATPT_OFCDC_SC_NM"]
 
     @property
     def sd_schul_code(self):
+        """
+        :return: 표준학교코드
+        """
         return self.data["SD_SCHUL_CODE"]
 
     @property
     def schul_nm(self):
+        """
+        :return: 학교명
+        """
         return self.data["SCHUL_NM"]
 
     @property
     def mmeal_sc_code(self):
+        """
+        :return: 식사코드
+        """
         return self.data["MMEAL_SC_CODE"]
 
     @property
     def mmeal_sc_nm(self):
+        """
+        :return: 식사명
+        """
         return self.data["MMEAL_SC_NM"]
 
     @property
     def mlsv_ymd(self):
+        """
+        :return: 급식일자
+        """
         return self.data["MLSV_YMD"]
 
     @property
+    def mlsv_fgr(self):
+        """
+        :return: 급식인원수
+        """
+        return self.data["MLSV_FGR"]
+
+    @property
     def ddish_nm(self):
+        """
+        :return: 요리명
+        """
         return self.data["DDISH_NM"].replace("<br/>", "\n")
 
     @property
     def orplc_info(self):
+        """
+        :return: 원산지정보
+        """
         return self.data["ORPLC_INFO"].replace("<br/>", "\n")
 
     @property
     def cal_info(self):
+        """
+        :return: 칼로리정보
+        """
         return self.data["CAL_INFO"]
 
     @property
     def ntr_info(self):
+        """
+        :return: 영양정보
+        """
         return self.data["NTR_INFO"].replace("<br/>", "\n")
