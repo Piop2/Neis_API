@@ -1,4 +1,4 @@
-__all__ = ['mealInfo']
+__all__ = ['mealInfo', 'schoolInfo']
 
 
 class Region:
