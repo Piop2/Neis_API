@@ -66,6 +66,74 @@ def get_school_data(key, atpt_ofcdc_sc_code=None, sd_schul_code=None, schul_nm=N
 
     return tuple(SchoolInfo(data) for data in request_json["schoolInfo"][1]["row"])
 
+# 'ATPT_OFCDC_SC_CODE', 'ATPT_OFCDC_SC_NM', 'SD_SCHUL_CODE',
+# 'SCHUL_NM', 'ENG_SCHUL_NM'//, 'SCHUL_KND_SC_NM', 'LCTN_SC_NM'//,
+# 'JU_ORG_NM',
+# 'FOND_SC_NM', //
+# 'ORG_RDNZC', 'ORG_RDNMA', 'ORG_RDNDA', 'ORG_TELNO', 'HMPG_ADRES',
+# 'COEDU_SC_NM', 'ORG_FAXNO', 'HS_SC_NM', 'INDST_SPECL_CCCCL_EXST_YN', 'HS_GNRL_BUSNS_SC_NM',
+# 'SPCLY_PURPS_HS_ORD_NM', 'ENE_BFE_SEHF_SC_NM', 'DGHT_SC_NM', 'FOND_YMD', 'FOAS_MEMRD', 'LOAD_DTM'
+
 class SchoolInfo:
     def __init__(self, school_data):
         self.data = school_data
+
+    @property
+    def atpt_ofcdc_sc_code(self):
+        return self.data["ATPT_OFCDC_SC_CODE"]
+
+    @property
+    def atpt_ofcdc_sc_nm(self):
+        return self.data["ATPT_OFCDC_SC_NM"]
+
+    @property
+    def sd_schul_code(self):
+        return self.data["SD_SCHUL_CODE"]
+
+    @property
+    def schul_nm(self):
+        return self.data["SCHUL_NM"]
+
+    @property
+    def eng_schul_nm(self):
+        return self.data["ENG_SCHUL_NM"]
+
+    @property
+    def schul_knd_sc_nm(self):
+        return self.data["SCHUL_KND_SC_NM"]
+
+    @property
+    def lctn_sc_nm(self):
+        return self.data["LCTN_SC_NM"]
+
+    @property
+    def ju_org_nm(self):
+        return self.data["JU_ORG_NM"]
+
+    @property
+    def fond_sc_nm(self):
+        return self.data["FOND_SC_NM"]
+
+    @property
+    def org_rdnzc(self):
+        return self.data["ORG_RDNZC"]
+
+    @property
+    def org_rdnma(self):
+        return self.data["ORF_RDNMA"]
+
+    @property
+    def org_rdnda(self):
+        return self.data["ORG_RDNDA"]
+
+    @property
+    def org_telno(self):
+        return self.data["ORG_TELNO"]
+
+    @property
+    def hmpg_adres(self):
+        return self.data["HMPG_ADRES"]
+
+# 'ORG_RDNZC', 'ORG_RDNMA', 'ORG_RDNDA', 'ORG_TELNO', 'HMPG_ADRES',//
+# 'COEDU_SC_NM', 'ORG_FAXNO', 'HS_SC_NM', 'INDST_SPECL_CCCCL_EXST_YN', 'HS_GNRL_BUSNS_SC_NM',
+# 'SPCLY_PURPS_HS_ORD_NM', 'ENE_BFE_SEHF_SC_NM', 'DGHT_SC_NM', 'FOND_YMD', 'FOAS_MEMRD', 'LOAD_DTM'
