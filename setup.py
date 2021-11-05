@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
     name="Neis_API",
-    version="0.1.2-aplha",
+    version="0.1.3-aplha",
     license='MIT',
     author="PIO",
     author_email="seungyounyou0220@gmail.com",
