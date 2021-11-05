@@ -9,15 +9,15 @@ def get_meal_data(key, atpt_ofcdc_sc_code, sd_schul_code, mmeal_sc_code=None, ml
     """
     신청주소: https://open.neis.go.kr/hub/mealServiceDietInfo
     신청제한횟수: 제한없음
-    :param key:인증키
-    :param atpt_ofcdc_sc_code:시도교육청코드
-    :param sd_schul_code:표준학교코드
+    :param key:인증키 (필수)
+    :param atpt_ofcdc_sc_code:시도교육청코드 (필수)
+    :param sd_schul_code:표준학교코드 (필수)
     :param mmeal_sc_code:식사코드
     :param mlsv_ymd:급식일자
     :param mlsv_from_ymd:급식시작일자
     :param mlsv_to_ymd: 급식종료일자
-    :param pindex:페이지 위치
-    :param psize:페이지 당 신청 숫자
+    :param pindex:페이지 위치 (필수)
+    :param psize:페이지 당 신청 숫자 (필수)
     :return:검색된 모든 급식
     """
 
