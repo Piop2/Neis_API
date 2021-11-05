@@ -18,3 +18,7 @@ pip install Neis-API
 ## 라이선스
 
 이 프로젝트는 MIT License에 속해 있습니다.
+
+## 도와주신 분
+
+- [hyunwoo6321](https://github.com/hyunwoo6321)
