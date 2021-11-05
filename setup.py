@@ -8,6 +8,7 @@ setuptools.setup(
     author_email="seungyounyou0220@gmail.com",
     description="나이스 API를 활용할 수 있게 도와주는 파이썬 패키지 입니다",
     long_description=open('README.md').read(),
+    long_description_content_type="text/markdown",
     url="https://github.com/Piop2/Neis_API",
     packages=setuptools.find_packages(),
     classifiers=[
