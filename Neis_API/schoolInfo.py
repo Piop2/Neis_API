@@ -66,13 +66,6 @@ def get_school_data(key, atpt_ofcdc_sc_code=None, sd_schul_code=None, schul_nm=N
 
     return tuple(SchoolInfo(data) for data in request_json["schoolInfo"][1]["row"])
 
-# 'ATPT_OFCDC_SC_CODE', 'ATPT_OFCDC_SC_NM', 'SD_SCHUL_CODE',
-# 'SCHUL_NM', 'ENG_SCHUL_NM'//, 'SCHUL_KND_SC_NM', 'LCTN_SC_NM'//,
-# 'JU_ORG_NM',
-# 'FOND_SC_NM', //
-# 'ORG_RDNZC', 'ORG_RDNMA', 'ORG_RDNDA', 'ORG_TELNO', 'HMPG_ADRES',
-# 'COEDU_SC_NM', 'ORG_FAXNO', 'HS_SC_NM', 'INDST_SPECL_CCCCL_EXST_YN', 'HS_GNRL_BUSNS_SC_NM',
-# 'SPCLY_PURPS_HS_ORD_NM', 'ENE_BFE_SEHF_SC_NM', 'DGHT_SC_NM', 'FOND_YMD', 'FOAS_MEMRD', 'LOAD_DTM'
 
 class SchoolInfo:
     def __init__(self, school_data):
@@ -134,6 +127,47 @@ class SchoolInfo:
     def hmpg_adres(self):
         return self.data["HMPG_ADRES"]
 
-# 'ORG_RDNZC', 'ORG_RDNMA', 'ORG_RDNDA', 'ORG_TELNO', 'HMPG_ADRES',//
-# 'COEDU_SC_NM', 'ORG_FAXNO', 'HS_SC_NM', 'INDST_SPECL_CCCCL_EXST_YN', 'HS_GNRL_BUSNS_SC_NM',
-# 'SPCLY_PURPS_HS_ORD_NM', 'ENE_BFE_SEHF_SC_NM', 'DGHT_SC_NM', 'FOND_YMD', 'FOAS_MEMRD', 'LOAD_DTM'
+    @property
+    def coedu_sc_nm(self):
+        return self.data["COEDU_SC_NM"]
+
+    @property
+    def org_faxno(self):
+        return self.data["ORG_FAXNO"]
+
+    @property
+    def hs_sc_nm(self):
+        return self.data["HS_SC_NM"]
+
+    @property
+    def indst_specl_ccccl_exst_yn(self):
+        return self.data["INDST_SPECL_CCCCL_EXST_YN"]
+
+    @property
+    def hs_gnrl_busns_sc_nm(self):
+        return self.data["HS_GNRL_BUSNS_SC_NM"]
+
+    @property
+    def spcly_purps_hs_ord_nm(self):
+        return self.data["SPCLY_PURPS_HS_ORD_NM"]
+
+    @property
+    def ene_bfe_sehf_sc_nm(self):
+        return self.data["ENE_BFE_SEHF_SC_NM"]
+
+    @property
+    def dght_sc_nm(self):
+        return self.data["DGHT_SC_NM"]
+
+    @property
+    def fond_ymd(self):
+        return self.data["FOND_YMD"]
+
+    @property
+    def foas_memrd(self):
+        return self.data["FOAS_MEMRD"]
+
+    @property
+    def load_dtm(self):
+        return self.data["LOAD_DTM"]
+
