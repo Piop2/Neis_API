@@ -10,7 +10,7 @@ Neis_API를 사용하기 위해서는 토큰이 필요합니다.<br/>
 ## 설치
 
 ```shell
-pip install NEIS_API
+pip install Neis_API
 ```
 
 ## 라이선스
