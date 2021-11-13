@@ -15,54 +15,80 @@ Neis_API를 사용하기 위해서는 토큰이 필요합니다.<br/>
 pip install Neis-API
 ```
 
-## 예제
-### Region
-```python
-# API에서 필수로 입력되어야 하는 시도교육청코드입니다.
-from Neis-API import Region
-# SEOUL     (서울) : B10
-# BUSAN     (부산) : C10
-# DAEGU     (대구) : D10
-# INCHEON   (인천) : E10
-# GWANGJU   (광주) : F10
-# DAEJEON   (대전) : G10
-# ULSAN     (울산) : H10
-# SEJONG    (세종) : I10
-# GYEONGGI  (경기) : J10
-# GANGWON   (강원) : K10
-# CHUNGBUK  (전북) : M10
-# CHUNGNAM  (전남) : N10
-# JEONBUK   (전북) : P10
-# JEONNAM   (전남) : Q10
-# GYEONGBUK (경북) : R10
-# GYEONGNAM (경남) : S10
-# JEJU      (제주) : T10
-# FORIENGER (그 외 국제학교) : V10
-
-print(Region.SEOUL)
-
-### 출력 ###
-# B10
-```
+## 예시
 
 ### mealInfo
-```py
+```python
+# 날짜로 급식찾기
 from Neis-API import Region, mealInfo
 
-# 날짜로 급식찾기
 data = mealInfo.get_meal_data(key= "토큰",
                               atpt_ofcdc_sc_code=Region.SEOUL,
                               sd_schul_code="7091432",
                               mlsv_ymd="20211109")
-print(data[0].ddish_nm) # tuple형식으로 return됩니다(검색 정확도 순)
+print(data[0].ddish_nm)
 
-### 결과 ###
+### 출력 ###
 # 기장흑미밥
 # 얼큰꽃게탕5.8.9.13.17.18.
 # 감자채볶음1.5.10.13.
 # 매콤닭불구이1.2.5.6.15.
 # 배추김치9.13.
 # 힘내파인애플씨13.
+```
+
+### schoolInfo
+```python
+# 이름으로 학교 코드 찾기
+from Neis-API import Region, schoolInfo
+
+# 시도교육청코드는 필수 값이 아니지만 학교 검색의 정확도를 높이기 위해 넣었습니다.
+school_name = "서운중학교"
+data = schoolInfo.get_school_data(key="토큰",
+                                     atpt_ofcdc_sc_code=Region.SEOUL,
+                                     schul_nm=school_name)
+print(data[0].sd_schul_code)
+### 출력 ###
+# 7091432
+```
+
+## 사용
+### Region
+```
+Region.SEOUL     (서울) : B10
+Region.BUSAN     (부산) : C10
+Region.DAEGU     (대구) : D10
+Region.INCHEON   (인천) : E10
+Region.GWANGJU   (광주) : F10
+Region.DAEJEON   (대전) : G10
+Region.ULSAN     (울산) : H10
+Region.SEJONG    (세종) : I10
+Region.GYEONGGI  (경기) : J10
+Region.GANGWON   (강원) : K10
+Region.CHUNGBUK  (전북) : M10
+Region.CHUNGNAM  (전남) : N10
+Region.JEONBUK   (전북) : P10
+Region.JEONNAM   (전남) : Q10
+Region.GYEONGBUK (경북) : R10
+Region.GYEONGNAM (경남) : S10
+Region.JEJU      (제주) : T10
+Region.FORIENGER (그 외 국제학교) : V10
+```
+
+## 오류 (exceptions)
+```
+ERROR-300   : 필수 값이 누락되어 있습니다... -> 필수값을 다시 확인해주십시오.
+ERROR-290   : 인증키가 유효하지 않습니다... -> KEY값 오류입니다.
+ERROR-333   : 요청위치 값의 타입이 유효하지 않습니다... -> pindex 또는 isize의 값이 자연수로 설정해주세요.
+ERROR-336   : 데이터요청은 한번에 최대 1,000건을 넘을 수 없습니다.
+ERROR-337   : 일별 트래픽 제한을 넘은 호출입니다. 오늘은 더이상 호출할 수 없습니다.
+ERROR-500   : 서버 오류입니다. 지속적으로 발생시 홈페이지로 문의(Q&A) 바랍니다.
+ERROR-600   : 데이터베이스 연결 오류입니다. 지속적으로 발생시 홈페이지로 문의(Q&A) 바랍니다.
+ERROR-601   : SQL 문장 오류 입니다. 지속적으로 발생시 홈페이지로 문의(Q&A) 바랍니다.
+
+
+INFO-300    : 관리자에 의해 인증키 사용이 제한되었습니다.
+INFO-200    : 해당하는 데이터가 없습니다.
 ```
 
 ## 라이선스
