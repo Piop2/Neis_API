@@ -73,8 +73,11 @@ class School:
     def __str__(self):
         return self._name
 
-    def get_meal_info(self):
-        return mealInfo.get_meal_data(atpt_ofcdc_sc_code=self.region_code, sd_schul_code=self.code)[0]
+    def get_meal_info(self, year, month, day):
+        date = f"{year}{month:02}{day:02}"
+        return mealInfo.get_meal_data(atpt_ofcdc_sc_code=self.region_code,
+                                      sd_schul_code=self.code,
+                                      mlsv_ymd=date)[0]
 
     def get_school_info(self):
         return schoolInfo.get_school_data(atpt_ofcdc_sc_code=self.region_code, sd_schul_code=self.code)[0]

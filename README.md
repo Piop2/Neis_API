@@ -17,10 +17,32 @@ pip install Neis-API
 
 ## 예시
 
+### School
+```python
+from Neis_API import Region, School
+
+school = School.find(region_code=Region.SEOUL,
+                     school_name="서운중학교")
+meal_data = school.get_meal_info(2021, 11, 9)
+print(meal_data.ddish_nm)
+### 출력 ###
+# 기장흑미밥
+# 얼큰꽃게탕5.8.9.13.17.18.
+# 감자채볶음1.5.10.13.
+# 매콤닭불구이1.2.5.6.15.
+# 배추김치9.13.
+# 힘내파인애플씨13.
+
+school_data = school.get_school_info()
+print(school_data.sd_schul_code)
+### 출력 ###
+# 7091432
+```
+
 ### mealInfo
 ```python
 # 날짜로 급식찾기
-from Neis-API import Region, mealInfo
+from Neis_API import Region, mealInfo
 
 data = mealInfo.get_meal_data(key= "토큰",
                               atpt_ofcdc_sc_code=Region.SEOUL,
@@ -40,7 +62,7 @@ print(data[0].ddish_nm)
 ### schoolInfo
 ```python
 # 이름으로 학교 코드 찾기
-from Neis-API import Region, schoolInfo
+from Neis_API import Region, schoolInfo
 
 # 시도교육청코드는 필수 값이 아니지만 학교 검색의 정확도를 높이기 위해 넣었습니다.
 school_name = "서운중학교"
