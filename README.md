@@ -12,7 +12,7 @@ Neis_API는 나이스 교육정보 개방 포탈을 이용합니다.<br/>
 ## 설치
 
 ```shell
-pip install Neis_API
+pip install Neis-API
 ```
 
 ## 예시
