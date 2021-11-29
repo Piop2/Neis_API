@@ -1,15 +1,14 @@
 import requests
-from .exceptions import *
+from exceptions import *
 
 URL = "https://open.neis.go.kr/hub/schoolInfo"
 
 
-def get_school_data(key, atpt_ofcdc_sc_code=None, sd_schul_code=None, schul_nm=None, schul_knd_sc_nm=None,
+def get_school_data(atpt_ofcdc_sc_code=None, sd_schul_code=None, schul_nm=None, schul_knd_sc_nm=None,
                     lctn_sc_nm=None,fond_sc_nm=None, pindex: int = 1, psize: int = 100):
     """
     신청주소: https://open.neis.go.kr/hub/schoolInfo
     신청제한횟수: 제한없음
-    :param key: 인증키 (필수)
     :param atpt_ofcdc_sc_code: 시도교육청코드
     :param sd_schul_code: 표준학교코드
     :param schul_nm: 학교명
@@ -22,7 +21,6 @@ def get_school_data(key, atpt_ofcdc_sc_code=None, sd_schul_code=None, schul_nm=N
     """
 
     params = {
-        "KEY": key,
         "Type": "json",
         "pIndex": pindex,
         "pSize": psize,
