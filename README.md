@@ -2,8 +2,8 @@
 
 [![PyPI version](https://badge.fury.io/py/Neis-API.svg)](https://badge.fury.io/py/Neis-API)<a href="https://pypi.org/project/Neis-API"><img src="https://img.shields.io/pypi/dm/Neis-API" alt="PyPI downloads"></a>
 
-Neis_API를 사용하기 위해서는 토큰이 필요합니다.<br/>
-토큰은 [나이스 교육정보 개방 포탈](https://open.neis.go.kr/portal/mainPage.do) 에서 신청할 수 있습니다.
+Neis_API는 나이스 교육정보 개방 포탈을 이용합니다.<br/>
+자세한 정보는 [나이스 교육정보 개방 포탈](https://open.neis.go.kr/portal/mainPage.do) 를 참고해주세요.
 
 ## 특징
 
