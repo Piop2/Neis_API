@@ -12,7 +12,7 @@ Neis_API를 사용하기 위해서는 토큰이 필요합니다.<br/>
 ## 설치
 
 ```shell
-pip install Neis-API
+pip install Neis_API
 ```
 
 ## 예시
@@ -44,8 +44,7 @@ print(school_data.sd_schul_code)
 # 날짜로 급식찾기
 from Neis_API import Region, mealInfo
 
-data = mealInfo.get_meal_data(key= "토큰",
-                              atpt_ofcdc_sc_code=Region.SEOUL,
+data = mealInfo.get_meal_data(atpt_ofcdc_sc_code=Region.SEOUL,
                               sd_schul_code="7091432",
                               mlsv_ymd="20211109")
 print(data[0].ddish_nm)
@@ -66,9 +65,8 @@ from Neis_API import Region, schoolInfo
 
 # 시도교육청코드는 필수 값이 아니지만 학교 검색의 정확도를 높이기 위해 넣었습니다.
 school_name = "서운중학교"
-data = schoolInfo.get_school_data(key="토큰",
-                                     atpt_ofcdc_sc_code=Region.SEOUL,
-                                     schul_nm=school_name)
+data = schoolInfo.get_school_data(atpt_ofcdc_sc_code=Region.SEOUL,
+                                  schul_nm=school_name)
 print(data[0].sd_schul_code)
 ### 출력 ###
 # 7091432
