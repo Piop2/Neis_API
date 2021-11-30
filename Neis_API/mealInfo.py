@@ -4,12 +4,12 @@ from exceptions import *
 URL = "https://open.neis.go.kr/hub/mealServiceDietInfo"
 
 
-def get_meal_data(origin_code, school_code, meal_code=None, date=None,
+def get_meal_data(region_code, school_code, meal_code=None, date=None,
                   start_date=None, end_date=None, pindex: int = 1, psize: int = 100):
     """
     신청주소: https://open.neis.go.kr/hub/mealServiceDietInfo
     신청제한횟수: 제한없음
-    :param origin_code:시도교육청코드 (필수)
+    :param region_code:시도교육청코드 (필수)
     :param school_code:표준학교코드 (필수)
     :param meal_code:식사코드
     :param date:급식일자
@@ -24,7 +24,7 @@ def get_meal_data(origin_code, school_code, meal_code=None, date=None,
         "Type": "json",
         "pIndex": pindex,
         "pSize": psize,
-        "ATPT_OFCDC_SC_CODE": origin_code,
+        "ATPT_OFCDC_SC_CODE": region_code,
         "SD_SCHUL_CODE": school_code,
         "MMEAL_SC_CODE": meal_code,
         "MLSV_YMD": date,
@@ -70,14 +70,14 @@ class SchoolMeal:
         self.data = meal_data
 
     @property
-    def origin_code(self):
+    def region_code(self):
         """
         :return: 시도교육청코드
         """
         return self.data["ATPT_OFCDC_SC_CODE"]
 
     @property
-    def origin_name(self):
+    def region_name(self):
         """
         :return: 시도교육청명
         """

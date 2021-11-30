@@ -45,39 +45,25 @@ class Region:
 
 
 class School:
-    def __init__(self, region_code, school_code):
-        self._region_code = region_code
-        self._code = school_code
-        
-        school_info = self.get_school_info()
-        self._region_name = school_info.atpt_ofcdc_sc_nm
-        self._name = school_info.schul_nm
+    def __init__(self, school_data):
+        self.data = school_data
 
     @classmethod
     def find(cls, region_code, school_name):
-        school_data = get_school_data(atpt_ofcdc_sc_code=region_code, schul_nm=school_name)[0]
-        return School(region_code=region_code, school_code=school_data.sd_schul_code)
-
-    @property
-    def region_code(self):
-        return self._region_code
-    
-    @property
-    def code(self):
-        return self._code
-    
-    @property
-    def name(self):
-        return self._name
+        school_data = get_school_data(region_code=region_code, school_name=school_name)[0]
+        return School(school_data)
 
     def __str__(self):
-        return self._name
+        return self.data.school_name
+
+    def __int__(self):
+        return self.data.school_code
 
     def get_meal_info(self, year, month, day):
         date = f"{year}{month:02}{day:02}"
-        return mealInfo.get_meal_data(atpt_ofcdc_sc_code=self.region_code,
-                                      sd_schul_code=self.code,
-                                      mlsv_ymd=date)[0]
+        return mealInfo.get_meal_data(region_code=self.data.region_code,
+                                      school_code=self.data.school_code,
+                                      date=date)[0]
 
     def get_school_info(self):
-        return schoolInfo.get_school_data(atpt_ofcdc_sc_code=self.region_code, sd_schul_code=self.code)[0]
+        return self.data

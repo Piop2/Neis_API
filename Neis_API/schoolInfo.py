@@ -4,12 +4,12 @@ from exceptions import *
 URL = "https://open.neis.go.kr/hub/schoolInfo"
 
 
-def get_school_data(origin_code=None, school_code=None, school_name=None, school_type=None,
+def get_school_data(region_code=None, school_code=None, school_name=None, school_type=None,
                     location_name=None,founding_name=None, pindex: int = 1, psize: int = 100):
     """
     신청주소: https://open.neis.go.kr/hub/schoolInfo
     신청제한횟수: 제한없음
-    :param origin_code: 시도교육청코드
+    :param region_code: 시도교육청코드
     :param school_code: 표준학교코드
     :param school_name: 학교명
     :param school_type: 학교종류명
@@ -24,7 +24,7 @@ def get_school_data(origin_code=None, school_code=None, school_name=None, school
         "Type": "json",
         "pIndex": pindex,
         "pSize": psize,
-        "ATPT_OFCDDC_SC_CODE": origin_code,
+        "ATPT_OFCDDC_SC_CODE": region_code,
         "SD_SCHUL_CODE": school_code,
         "SCHUL_NM": school_name,
         "SCHUL_KND_SC_NM": school_type,
@@ -70,14 +70,14 @@ class SchoolInfo:
         self.data = school_data
 
     @property
-    def origin_code(self):
+    def region_code(self):
         """
         :return: 시도교육청코드
         """
         return self.data["ATPT_OFCDC_SC_CODE"]
 
     @property
-    def origin_name(self):
+    def region_name(self):
         """
         :return: 시도교육청명
         """
