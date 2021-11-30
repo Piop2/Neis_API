@@ -4,19 +4,19 @@ from exceptions import *
 URL = "https://open.neis.go.kr/hub/mealServiceDietInfo"
 
 
-def get_meal_data(atpt_ofcdc_sc_code, sd_schul_code, mmeal_sc_code=None, mlsv_ymd=None,
-                  mlsv_from_ymd=None, mlsv_to_ymd=None, pindex: int = 1, psize: int = 100):
+def get_meal_data(origin_code, school_code, meal_code=None, date=None,
+                  start_date=None, end_date=None, pindex: int = 1, psize: int = 100):
     """
     신청주소: https://open.neis.go.kr/hub/mealServiceDietInfo
     신청제한횟수: 제한없음
-    :param atpt_ofcdc_sc_code:시도교육청코드 (필수)
-    :param sd_schul_code:표준학교코드 (필수)
-    :param mmeal_sc_code:식사코드
-    :param mlsv_ymd:급식일자
-    :param mlsv_from_ymd:급식시작일자
-    :param mlsv_to_ymd: 급식종료일자
-    :param pindex:페이지 위치 (필수)
-    :param psize:페이지 당 신청 숫자 (필수)
+    :param origin_code:시도교육청코드 (필수)
+    :param school_code:표준학교코드 (필수)
+    :param meal_code:식사코드
+    :param date:급식일자
+    :param start_date:급식시작일자
+    :param end_date: 급식종료일자
+    :param pindex:페이지 위치
+    :param psize:페이지 당 신청 숫자
     :return:검색된 모든 급식
     """
 
@@ -24,12 +24,12 @@ def get_meal_data(atpt_ofcdc_sc_code, sd_schul_code, mmeal_sc_code=None, mlsv_ym
         "Type": "json",
         "pIndex": pindex,
         "pSize": psize,
-        "ATPT_OFCDC_SC_CODE": atpt_ofcdc_sc_code,
-        "SD_SCHUL_CODE": sd_schul_code,
-        "MMEAL_SC_CODE": mmeal_sc_code,
-        "MLSV_YMD": mlsv_ymd,
-        "MLSV_FROM_YMD": mlsv_from_ymd,
-        "MLSV_TO_YMD": mlsv_to_ymd
+        "ATPT_OFCDC_SC_CODE": origin_code,
+        "SD_SCHUL_CODE": school_code,
+        "MMEAL_SC_CODE": meal_code,
+        "MLSV_YMD": date,
+        "MLSV_FROM_YMD": start_date,
+        "MLSV_TO_YMD": end_date
     }
 
     res = requests.get(url=URL, params=params, verify=False, json=True)
@@ -70,70 +70,70 @@ class SchoolMeal:
         self.data = meal_data
 
     @property
-    def atpt_ofcdc_sc_code(self):
+    def origin_code(self):
         """
         :return: 시도교육청코드
         """
         return self.data["ATPT_OFCDC_SC_CODE"]
 
     @property
-    def atpt_ofcdc_sc_nm(self):
+    def origin_name(self):
         """
         :return: 시도교육청명
         """
         return self.data["ATPT_OFCDC_SC_NM"]
 
     @property
-    def sd_schul_code(self):
+    def school_code(self):
         """
         :return: 표준학교코드
         """
         return self.data["SD_SCHUL_CODE"]
 
     @property
-    def schul_nm(self):
+    def school_name(self):
         """
         :return: 학교명
         """
         return self.data["SCHUL_NM"]
 
     @property
-    def mmeal_sc_code(self):
+    def meal_code(self):
         """
         :return: 식사코드
         """
         return self.data["MMEAL_SC_CODE"]
 
     @property
-    def mmeal_sc_nm(self):
+    def meal_name(self):
         """
         :return: 식사명
         """
         return self.data["MMEAL_SC_NM"]
 
     @property
-    def mlsv_ymd(self):
+    def date(self):
         """
         :return: 급식일자
         """
         return self.data["MLSV_YMD"]
 
     @property
-    def mlsv_fgr(self):
+    def servings(self):
         """
         :return: 급식인원수
         """
         return self.data["MLSV_FGR"]
 
     @property
-    def ddish_nm(self):
+    def dish_name(self):
         """
         :return: 요리명
         """
         return self.data["DDISH_NM"].replace("<br/>", "\n")
 
     @property
-    def orplc_info(self):
+    def org_info(self):
         """
         :return: 원산지정보
         """

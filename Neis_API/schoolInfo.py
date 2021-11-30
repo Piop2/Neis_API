@@ -4,17 +4,17 @@ from exceptions import *
 URL = "https://open.neis.go.kr/hub/schoolInfo"
 
 
-def get_school_data(atpt_ofcdc_sc_code=None, sd_schul_code=None, schul_nm=None, schul_knd_sc_nm=None,
-                    lctn_sc_nm=None,fond_sc_nm=None, pindex: int = 1, psize: int = 100):
+def get_school_data(origin_code=None, school_code=None, school_name=None, school_type=None,
+                    location_name=None,founding_name=None, pindex: int = 1, psize: int = 100):
     """
     신청주소: https://open.neis.go.kr/hub/schoolInfo
     신청제한횟수: 제한없음
-    :param atpt_ofcdc_sc_code: 시도교육청코드
-    :param sd_schul_code: 표준학교코드
-    :param schul_nm: 학교명
-    :param schul_knd_sc_nm: 학교종류명
-    :param lctn_sc_nm: 소재지명
-    :param fond_sc_nm: 설립명
+    :param origin_code: 시도교육청코드
+    :param school_code: 표준학교코드
+    :param school_name: 학교명
+    :param school_type: 학교종류명
+    :param location_name: 소재지명
+    :param founding_name: 설립명
     :param pindex: 페이지 위치
     :param psize: 페이지 당 신청 숫자 (필수)
     :return: 검색된 모든 학교 (필수)
@@ -24,12 +24,12 @@ def get_school_data(atpt_ofcdc_sc_code=None, sd_schul_code=None, schul_nm=None, 
         "Type": "json",
         "pIndex": pindex,
         "pSize": psize,
-        "ATPT_OFCDDC_SC_CODE": atpt_ofcdc_sc_code,
-        "SD_SCHUL_CODE": sd_schul_code,
-        "SCHUL_NM": schul_nm,
-        "SCHUL_KND_SC_NM": schul_knd_sc_nm,
-        "LCTN_SC_NM": lctn_sc_nm,
-        "FOND_SC_NM": fond_sc_nm,
+        "ATPT_OFCDDC_SC_CODE": origin_code,
+        "SD_SCHUL_CODE": school_code,
+        "SCHUL_NM": school_name,
+        "SCHUL_KND_SC_NM": school_type,
+        "LCTN_SC_NM": location_name,
+        "FOND_SC_NM": founding_name,
     }
 
     res = requests.get(url=URL, params=params, verify=False, json=True)
@@ -70,119 +70,119 @@ class SchoolInfo:
         self.data = school_data
 
     @property
-    def atpt_ofcdc_sc_code(self):
+    def origin_code(self):
         """
         :return: 시도교육청코드
         """
         return self.data["ATPT_OFCDC_SC_CODE"]
 
     @property
-    def atpt_ofcdc_sc_nm(self):
+    def origin_name(self):
         """
         :return: 시도교육청명
         """
         return self.data["ATPT_OFCDC_SC_NM"]
 
     @property
-    def sd_schul_code(self):
+    def school_code(self):
         """
         :return: 표준학교코드
         """
         return self.data["SD_SCHUL_CODE"]
 
     @property
-    def schul_nm(self):
+    def school_name(self):
         """
         :return: 학교명
         """
         return self.data["SCHUL_NM"]
 
     @property
-    def eng_schul_nm(self):
+    def en_school_name(self):
         """
         :return: 영문학교명
         """
         return self.data["ENG_SCHUL_NM"]
 
     @property
-    def schul_knd_sc_nm(self):
+    def school_type(self):
         """
         :return: 학교종류명
         """
         return self.data["SCHUL_KND_SC_NM"]
 
     @property
-    def lctn_sc_nm(self):
+    def location_name(self):
         """
         :return: 소재지명
         """
         return self.data["LCTN_SC_NM"]
 
     @property
-    def ju_org_nm(self):
+    def org_name(self):
         """
         :return: 관할조직명
         """
         return self.data["JU_ORG_NM"]
 
     @property
-    def fond_sc_nm(self):
+    def founding_name(self):
         """
         :return: 설립명
         """
         return self.data["FOND_SC_NM"]
 
     @property
-    def org_rdnzc(self):
+    def zip_code(self):
         """
         :return: 도로명우편번호
         """
         return self.data["ORG_RDNZC"]
 
     @property
-    def org_rdnma(self):
+    def address(self):
         """
         :return: 도로명주소
         """
         return self.data["ORF_RDNMA"]
 
     @property
-    def org_rdnda(self):
+    def address_detail(self):
         """
         :return: 도로명상세주소
         """
         return self.data["ORG_RDNDA"]
 
     @property
-    def org_telno(self):
+    def number(self):
         """
         :return: 전화번호
         """
         return self.data["ORG_TELNO"]
 
     @property
-    def hmpg_adres(self):
+    def school_lnk(self):
         """
         :return: 홈페이지주소
         """
         return self.data["HMPG_ADRES"]
 
     @property
-    def coedu_sc_nm(self):
+    def coedu(self):
         """
         :return: 남녀공학구분명
         """
         return self.data["COEDU_SC_NM"]
 
     @property
-    def org_faxno(self):
+    def fax_number(self):
         """
         :return: 팩스번호
         """
         return self.data["ORG_FAXNO"]
 
     @property
-    def hs_sc_nm(self):
+    def high_sch_name(self):
         """
         :return: 고등학교구분명
         """
@@ -224,21 +224,21 @@ class SchoolInfo:
         return self.data["DGHT_SC_NM"]
 
     @property
-    def fond_ymd(self):
+    def founded_date(self):
         """
         :return: 설립일자
         """
         return self.data["FOND_YMD"]
 
     @property
-    def foas_memrd(self):
+    def sch_avsry(self):
         """
         :return: 개교기념일
         """
         return self.data["FOAS_MEMRD"]
 
     @property
-    def load_dtm(self):
+    def laste_update_date(self):
         """
         :return: 수정일
         """
