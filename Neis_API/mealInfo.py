@@ -1,5 +1,5 @@
 import requests
-from exceptions import *
+from .exceptions import *
 
 URL = "https://open.neis.go.kr/hub/mealServiceDietInfo"
 
