@@ -1,7 +1,7 @@
 __all__ = ['mealInfo', 'schoolInfo']
 
-from .mealInfo import *
-from .schoolInfo import *
+from .mealInfo import get_meal_data
+from .schoolInfo import get_school_data
 
 
 class Region:

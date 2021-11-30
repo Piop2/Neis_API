@@ -24,7 +24,7 @@ from Neis_API import Region, School
 school = School.find(region_code=Region.SEOUL,
                      school_name="서운중학교")
 meal_data = school.get_meal_info(2021, 11, 9)
-print(meal_data.ddish_nm)
+print(meal_data.dish_name)
 ### 출력 ###
 # 기장흑미밥
 # 얼큰꽃게탕5.8.9.13.17.18.
@@ -34,7 +34,7 @@ print(meal_data.ddish_nm)
 # 힘내파인애플씨13.
 
 school_data = school.get_school_info()
-print(school_data.sd_schul_code)
+print(school_data.school_code)
 ### 출력 ###
 # 7091432
 ```
@@ -47,7 +47,7 @@ from Neis_API import Region, mealInfo
 data = mealInfo.get_meal_data(region_code=Region.SEOUL,
                               school_code="7091432",
                               date="20211109")
-print(data[0].ddish_nm)
+print(data[0].dish_name)
 
 ### 출력 ###
 # 기장흑미밥
@@ -67,7 +67,7 @@ from Neis_API import Region, schoolInfo
 school_name = "서운중학교"
 data = schoolInfo.get_school_data(region_code=Region.SEOUL,
                                   school_code=school_name)
-print(data[0].sd_schul_code)
+print(data[0].school_code)
 ### 출력 ###
 # 7091432
 ```

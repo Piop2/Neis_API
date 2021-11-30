@@ -1,11 +1,11 @@
 import requests
-from .exceptions import *
+from .exceptions import check_status_code
 
 URL = "https://open.neis.go.kr/hub/schoolInfo"
 
 
 def get_school_data(region_code=None, school_code=None, school_name=None, school_type=None,
-                    location_name=None,founding_name=None, pindex: int = 1, psize: int = 100):
+                    location_name=None, founding_name=None, pindex: int = 1, psize: int = 100):
     """
     신청주소: https://open.neis.go.kr/hub/schoolInfo
     신청제한횟수: 제한없음
@@ -41,26 +41,7 @@ def get_school_data(region_code=None, school_code=None, school_name=None, school
     except KeyError:
         status_code = request_json["RESULT"]["CODE"]
 
-    if status_code == "ERROR-300":
-        raise Error300()
-    elif status_code == "ERROR-290":
-        raise Error290()
-    elif status_code == "ERROR-333":
-        raise Error333()
-    elif status_code == "ERROR-336":
-        raise Error336()
-    elif status_code == "ERROR-337":
-        raise Error337()
-    elif status_code == "ERROR-500":
-        raise Error500()
-    elif status_code == "ERROR-600":
-        raise Error600()
-    elif status_code == "ERROR-601":
-        raise Error601()
-    elif status_code == "INFO-300":
-        raise Info300()
-    elif status_code == "INFO-200":
-        raise Info200()
+    check_status_code(status_code)
 
     return tuple(SchoolInfo(data) for data in request_json["schoolInfo"][1]["row"])
 
@@ -243,4 +224,3 @@ class SchoolInfo:
         :return: 수정일
         """
         return self.data["LOAD_DTM"]
-

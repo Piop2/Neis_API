@@ -1,5 +1,5 @@
 import requests
-from .exceptions import *
+from .exceptions import check_status_code
 
 URL = "https://open.neis.go.kr/hub/mealServiceDietInfo"
 
@@ -41,26 +41,7 @@ def get_meal_data(region_code, school_code, meal_code=None, date=None,
     except KeyError:
         status_code = request_json["RESULT"]["CODE"]
 
-    if status_code == "ERROR-300":
-        raise Error300()
-    elif status_code == "ERROR-290":
-        raise Error290()
-    elif status_code == "ERROR-333":
-        raise Error333()
-    elif status_code == "ERROR-336":
-        raise Error336()
-    elif status_code == "ERROR-337":
-        raise Error337()
-    elif status_code == "ERROR-500":
-        raise Error500()
-    elif status_code == "ERROR-600":
-        raise Error600()
-    elif status_code == "ERROR-601":
-        raise Error601()
-    elif status_code == "INFO-300":
-        raise Info300()
-    elif status_code == "INFO-200":
-        raise Info200()
+    check_status_code(status_code)
 
     return tuple(SchoolMeal(data) for data in request_json["mealServiceDietInfo"][1]["row"])
 
