@@ -24,7 +24,7 @@ from Neis_API import Region, School
 school = School.find(region_code=Region.SEOUL,
                      school_name="서운중학교")
 meal_data = school.get_meal_info(2021, 11, 9)
-print(meal_data.dish_name)
+print(meal_data[0].dish_name)
 ### 출력 ###
 # 기장흑미밥
 # 얼큰꽃게탕5.8.9.13.17.18.
