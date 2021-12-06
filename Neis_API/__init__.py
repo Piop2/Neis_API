@@ -2,6 +2,11 @@ __all__ = ['mealInfo', 'schoolInfo']
 
 from .mealInfo import get_meal_data
 from .schoolInfo import get_school_data
+from .schoolschedule import get_schedule_data
+
+
+def get_date(year, month, day):
+    return f"{year}{month:02}{day:02}"
 
 
 class Region:
@@ -57,14 +62,15 @@ class School:
     def __str__(self):
         return self.data.school_name
 
-    def __int__(self):
-        return self.data.school_code
-
     def get_meal_info(self, year, month, day):
-        date = f"{year}{month:02}{day:02}"
-        return mealInfo.get_meal_data(region_code=self.data.region_code,
-                                      school_code=self.data.school_code,
-                                      date=date)[0]
+        return get_meal_data(region_code=self.data.region_code,
+                             school_code=self.data.school_code,
+                             date=get_date(year, month, day))
 
     def get_school_info(self):
         return self.data
+
+    def get_schedule_info(self, year, month, day):
+        return get_schedule_data(region_code=self.data.region_code,
+                                 school_code=self.data.school_code,
+                                 date=get_date(year, month, day))
