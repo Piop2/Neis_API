@@ -49,8 +49,8 @@ def get_schedule_data(region_code=None, school_code=None, dght_crse_sc_nm=None, 
 
 
 class SchoolSchedule:
-    def __init__(self, school_data):
-        self.data = school_data
+    def __init__(self, schedule_data):
+        self.data = schedule_data
 
     @property
     def region_code(self):

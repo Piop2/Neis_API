@@ -1,6 +1,6 @@
 # Neis API
 
-[![PyPI version](https://badge.fury.io/py/Neis-API.svg)](https://badge.fury.io/py/Neis-API)<a href="https://pypi.org/project/Neis-API"><img src="https://img.shields.io/pypi/dm/Neis-API" alt="PyPI downloads"></a>
+[![PyPI version](https://badge.fury.io/py/Neis-API.svg)](https://badge.fury.io/py/Neis-API) <a href="https://pypi.org/project/Neis-API"><img src="https://img.shields.io/pypi/dm/Neis-API" alt="PyPI downloads"></a>
 
 Neis_API는 나이스 교육정보 개방 포탈을 이용합니다.<br/>
 자세한 정보는 [나이스 교육정보 개방 포탈](https://open.neis.go.kr/portal/mainPage.do) 를 참고해주세요.
@@ -37,6 +37,11 @@ school_data = school.get_school_info()
 print(school_data.school_code)
 ### 출력 ###
 # 7091432
+
+schedule_1207 = school.get_schedule_info(2021, 12, 7)
+print(schedule_1207[0].event_info)
+### 출력 ###
+# 기말고사(2)
 ```
 
 ### mealInfo
@@ -70,6 +75,21 @@ data = schoolInfo.get_school_data(region_code=Region.SEOUL,
 print(data[0].school_code)
 ### 출력 ###
 # 7091432
+```
+
+### schoolInfo
+```python
+# 이름으로 학교 일정 찾기
+from Neis_API import Region, schoolschedule
+
+
+school_name = "서운중학교"
+data = schoolschedule.get_schedule_data(region_code=Region.SEOUL,
+                                        school_code=school_name,
+                                        date="20211207")
+print(data[0].event_name)
+### 출력 ###
+# 기말고사(2)
 ```
 
 ## 사용
