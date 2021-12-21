@@ -18,68 +18,98 @@ pip install Neis-API
 ## 예시
 
 ### School
+
+School 객체를 만들어서 여러정보를 빠르게 검색합니다.
 ```python
 from Neis_API import Region, School
 
 school = School.find(region_code=Region.SEOUL,
                      school_name="서운중학교")
-meal_data = school.get_meal_info(2021, 11, 9)
-print(meal_data[0].dish_name)
-### 출력 ###
-# 기장흑미밥
-# 얼큰꽃게탕5.8.9.13.17.18.
-# 감자채볶음1.5.10.13.
-# 매콤닭불구이1.2.5.6.15.
-# 배추김치9.13.
-# 힘내파인애플씨13.
-
-school_data = school.get_school_info()
-print(school_data.school_code)
-### 출력 ###
-# 7091432
-
-schedule_1207 = school.get_schedule_info(2021, 12, 7)
-print(schedule_1207[0].event_info)
-### 출력 ###
-# 기말고사(2)
 ```
 
-### mealInfo
+#### School.get_meal_info
+
+급식을 검색합니다.
+날짜를 입력받으면 아침, 점심, 저녁 급식을 return받습니다.
 ```python
-# 날짜로 급식찾기
+meal_data = school.get_meal_info(2021, 11, 9)
+print(meal_data[0].dish_name)
+```
+
+출력
+```
+기장흑미밥
+얼큰꽃게탕5.8.9.13.17.18.
+감자채볶음1.5.10.13.
+매콤닭불구이1.2.5.6.15.
+배추김치9.13.
+힘내파인애플씨13.
+```
+
+#### School.get_school_info
+
+학교정보를 return받습니다.
+```python
+school_data = school.get_school_info()
+print(school_data.school_code)
+```
+
+출력
+```
+7091432
+```
+
+#### School.get_schedule_info
+
+학사일정을 검색합니다
+날짜를 입력받으면 그날 모든 학사일정을 return받습니다.
+```python
+schedule_1207 = school.get_schedule_info(2021, 12, 7)
+print(schedule_1207[0].event_info)
+```
+
+출력
+```
+기말고사(2)
+```
+
+### mealInfo.mealInfo
+```python
 from Neis_API import Region, mealInfo
 
 data = mealInfo.get_meal_data(region_code=Region.SEOUL,
                               school_code="7091432",
                               date="20211109")
 print(data[0].dish_name)
-
-### 출력 ###
-# 기장흑미밥
-# 얼큰꽃게탕5.8.9.13.17.18.
-# 감자채볶음1.5.10.13.
-# 매콤닭불구이1.2.5.6.15.
-# 배추김치9.13.
-# 힘내파인애플씨13.
 ```
 
-### schoolInfo
+출력
+```
+기장흑미밥
+얼큰꽃게탕5.8.9.13.17.18.
+감자채볶음1.5.10.13.
+매콤닭불구이1.2.5.6.15.
+배추김치9.13.
+힘내파인애플씨13.
+```
+
+### schoolInfo.schoolInfo
 ```python
-# 이름으로 학교 코드 찾기
 from Neis_API import Region, schoolInfo
 
-# 시도교육청코드는 필수 값이 아니지만 학교 검색의 정확도를 높이기 위해 넣었습니다.
 school_name = "서운중학교"
 data = schoolInfo.get_school_data(region_code=Region.SEOUL,
                                   school_code=school_name)
 print(data[0].school_code)
-### 출력 ###
-# 7091432
 ```
 
-### schoolInfo
+출력
+```
+7091432
+```
+
+### schoolschedule.schoolInfo
 ```python
-# 이름으로 학교 일정 찾기
 from Neis_API import Region, schoolschedule
 
 
@@ -88,11 +118,13 @@ data = schoolschedule.get_schedule_data(region_code=Region.SEOUL,
                                         school_code=school_name,
                                         date="20211207")
 print(data[0].event_name)
-### 출력 ###
-# 기말고사(2)
+```
+출력
+```
+기말고사(2)
 ```
 
-## 사용
+## 시도교육청코드
 ### Region
 ```
 Region.SEOUL     (서울) : B10
