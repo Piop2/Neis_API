@@ -1,4 +1,4 @@
-__all__ = ['mealInfo', 'schoolInfo']
+__all__ = ['mealInfo', 'schoolInfo', 'schoolschedule']
 
 from .mealInfo import get_meal_data
 from .schoolInfo import get_school_data
