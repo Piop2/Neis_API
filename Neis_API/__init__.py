@@ -1,12 +1,8 @@
 __all__ = ['mealInfo', 'schoolInfo', 'schoolschedule']
 
-from .mealInfo import get_meal_data
-from .schoolInfo import get_school_data
-from .schoolschedule import get_schedule_data
-
-
-def get_date(year, month, day):
-    return f"{year}{month:02}{day:02}"
+from mealInfo import get_meal_data
+from schoolInfo import get_school_data
+from schoolschedule import get_schedule_data
 
 
 class Region:
@@ -51,26 +47,36 @@ class Region:
 
 
 class School:
-    def __init__(self, school_data):
-        self.data = school_data
+    def __init__(self, school_info):
+        self.school_info = school_info
 
     @classmethod
-    def find(cls, region_code, school_name):
-        school_data = get_school_data(region_code=region_code, school_name=school_name)[0]
+    def find(cls, region_code, school_code):
+        """
+        지역코드와 학교코드로 학교를 찾고 School객체를 리합니다.
+        :param region_code: 지역코드
+        :param school_code: 학교코드
+        :return: class School
+        """
+        school_data = get_school_data(region_code=region_code,
+                                      school_code=school_code)[0]
         return School(school_data)
 
     def __str__(self):
-        return self.data.school_name
+        """
+        :return: 학교명
+        """
+        return self.school_info.school_name
 
     def get_meal_info(self, year, month, day):
-        return get_meal_data(region_code=self.data.region_code,
-                             school_code=self.data.school_code,
-                             date=get_date(year, month, day))
+        return get_meal_data(region_code=self.school_info.region_code,
+                             school_code=self.school_info.school_code,
+                             date=f"{int(year)}{int(month):02}{int(day):02}")
 
     def get_school_info(self):
-        return self.data
+        return self.school_info
 
     def get_schedule_info(self, year, month, day):
-        return get_schedule_data(region_code=self.data.region_code,
-                                 school_code=self.data.school_code,
-                                 date=get_date(year, month, day))
+        return get_schedule_data(region_code=self.school_info.region_code,
+                                 school_code=self.school_info.school_code,
+                                 date=f"{int(year)}{int(month):02}{int(day):02}")
