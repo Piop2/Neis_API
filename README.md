@@ -1,6 +1,8 @@
 # Neis API
 
-[![PyPI version](https://badge.fury.io/py/Neis-API.svg)](https://badge.fury.io/py/Neis-API) <a href="https://pypi.org/project/Neis-API"><img src="https://img.shields.io/pypi/dm/Neis-API" alt="PyPI downloads"></a>
+[![PyPI version](https://badge.fury.io/py/Neis-API.svg)](https://badge.fury.io/py/Neis-API)
+<a href="https://pypi.org/project/Neis-API"><img src="https://img.shields.io/pypi/dm/Neis-API" alt="PyPI downloads"></a>
+<a href="https://github.com/Piop2/Neis_API/blob/main/LICENSE"><img src="https://img.shields.io/github/license/Ileriayo/markdown-badges?style=for-the-badge)" alt="./LICENSE"></a>
 
 Neis_API는 나이스 교육정보 개방 포탈을 이용합니다.<br/>
 자세한 정보는 [나이스 교육정보 개방 포탈](https://open.neis.go.kr/portal/mainPage.do) 를 참고해주세요.
