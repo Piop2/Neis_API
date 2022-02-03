@@ -5,7 +5,7 @@ URL = "https://open.neis.go.kr/hub/SchoolSchedule"
 
 
 def get_schedule_data(region_code=None, school_code=None, dght_crse_sc_nm=None, schul_crse_sc_nm=None,
-                      date=None, start_date=None, end_date=None, pindex: int = 1, psize: int = 100):
+                      date=None, start_date=None, end_date=None, key=None, pindex: int = 1, psize: int = 100):
     """
     신청주소: https://open.neis.go.kr/hub/SchoolSchedule
     신청제한횟수: 제한없음
@@ -16,12 +16,14 @@ def get_schedule_data(region_code=None, school_code=None, dght_crse_sc_nm=None, 
     :param date: 학사일자
     :param start_date: 학사시작일자
     :param end_date: 학사종료일자
+    :param key: API 인증키
     :param pindex: 페이지 위치
     :param psize: 페이지 당 신청 숫자 (필수)
     :return: 검색된 모든 학교 (필수)
     """
 
     params = {
+        "KEY": key,
         "Type": "json",
         "pIndex": pindex,
         "pSize": psize,

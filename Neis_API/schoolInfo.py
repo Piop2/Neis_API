@@ -5,7 +5,7 @@ URL = "https://open.neis.go.kr/hub/schoolInfo"
 
 
 def get_school_data(region_code=None, school_code=None, school_name=None, school_type=None,
-                    location_name=None, founding_name=None, pindex: int = 1, psize: int = 100):
+                    location_name=None, founding_name=None, key=None, pindex: int = 1, psize: int = 100):
     """
     신청주소: https://open.neis.go.kr/hub/schoolInfo
     신청제한횟수: 제한없음
@@ -15,12 +15,14 @@ def get_school_data(region_code=None, school_code=None, school_name=None, school
     :param school_type: 학교종류명
     :param location_name: 소재지명
     :param founding_name: 설립명
+    :param key: API 인증키
     :param pindex: 페이지 위치
     :param psize: 페이지 당 신청 숫자 (필수)
     :return: 검색된 모든 학교 (필수)
     """
 
     params = {
+        "KEY": key,
         "Type": "json",
         "pIndex": pindex,
         "pSize": psize,

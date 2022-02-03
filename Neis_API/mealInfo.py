@@ -5,7 +5,7 @@ URL = "https://open.neis.go.kr/hub/mealServiceDietInfo"
 
 
 def get_meal_data(region_code, school_code, meal_code=None, date=None,
-                  start_date=None, end_date=None, pindex: int = 1, psize: int = 100):
+                  start_date=None, end_date=None, key=None, pindex: int = 1, psize: int = 100):
     """
     신청주소: https://open.neis.go.kr/hub/mealServiceDietInfo
     신청제한횟수: 제한없음
@@ -15,12 +15,14 @@ def get_meal_data(region_code, school_code, meal_code=None, date=None,
     :param date:급식일자
     :param start_date:급식시작일자
     :param end_date: 급식종료일자
+    :param key: API 인증키
     :param pindex:페이지 위치
     :param psize:페이지 당 신청 숫자
     :return:검색된 모든 급식
     """
 
     params = {
+        "KEY": key,
         "Type": "json",
         "pIndex": pindex,
         "pSize": psize,
