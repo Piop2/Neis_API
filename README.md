@@ -24,7 +24,7 @@ School 객체를 만들어서 여러정보를 빠르게 검색합니다.
 from Neis_API import Region, School
 
 school = School.find(region_code=Region.SEOUL,
-                     school_name="서운중학교")
+                     school_name=7091432)
 ```
 
 #### School.get_meal_info
