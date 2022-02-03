@@ -3,7 +3,6 @@ __all__ = ['mealInfo', 'schoolInfo', 'schoolschedule']
 from .mealInfo import get_meal_data
 from .schoolInfo import get_school_data
 from .schoolschedule import get_schedule_data
-from .exceptions import *
 
 
 class Region:
@@ -48,8 +47,9 @@ class Region:
 
 
 class School:
-    def __init__(self, school_info):
+    def __init__(self, school_info, key=None):
         self.school_info = school_info
+        self._key = key
 
     @classmethod
     def find(cls, region_code, school_code, key=None):
@@ -85,6 +85,9 @@ class School:
         :param psize:페이지 당 신청 숫자
         :return:검색된 모든 급식
         """
+
+        key = self._key if self._key is not None else key
+
         return get_meal_data(
             region_code=self.school_info.region_code,
             school_code=self.school_info.school_code,
@@ -100,7 +103,8 @@ class School:
     def get_school_info(self):
         return self.school_info
 
-    def get_schedule_info(self, dght_crse_sc_nm=None, schul_crse_sc_nm=None, date=None, start_date=None, end_date=None, key=None,
+    def get_schedule_info(self, dght_crse_sc_nm=None, schul_crse_sc_nm=None, date=None, start_date=None, end_date=None,
+                          key=None,
                           pindex: int = 1, psize: int = 100):
         """
         신청주소: https://open.neis.go.kr/hub/SchoolSchedule
@@ -115,6 +119,9 @@ class School:
         :param psize: 페이지 당 신청 숫자 (필수)
         :return: 검색된 모든 학교 (필수)
         """
+
+        key = self._key if self._key is not None else key
+
         return get_schedule_data(
             region_code=self.school_info.region_code,
             school_code=self.school_info.school_code,
