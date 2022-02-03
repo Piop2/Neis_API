@@ -3,7 +3,7 @@ import setuptools
 setuptools.setup(
     name="Neis_API",
     version="0.5.2",
-    license='MIT',
+    license="MIT",
     author="PIO",
     author_email="seungyounyou0220@gmail.com",
     description="나이스 API를 활용할 수 있게 도와주는 파이썬 패키지 입니다",
