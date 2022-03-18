@@ -17,6 +17,12 @@ Neis_API는 나이스 교육정보 개방 포탈을 이용합니다.<br/>
 pip install Neis-API
 ```
 
+또는 밑에 있는 코드로 업그래이드 합니다.
+
+```shell
+pip intall --upgrade Neis-API
+```
+
 ## 예시
 
 ### School
@@ -77,9 +83,9 @@ print(schedule_1207[0].event_info)
 
 ### mealInfo.mealInfo
 ```python
-from Neis_API import Region, mealInfo
+from Neis_API import Region, get_meal_data
 
-data = mealInfo.get_meal_data(region_code=Region.SEOUL,
+data = get_meal_data(region_code=Region.SEOUL,
                               school_code="7091432",
                               date="20211109")
 print(data[0].dish_name)
@@ -97,10 +103,10 @@ print(data[0].dish_name)
 
 ### schoolInfo.schoolInfo
 ```python
-from Neis_API import Region, schoolInfo
+from Neis_API import Region, get_school_data
 
 school_name = "서운중학교"
-data = schoolInfo.get_school_data(region_code=Region.SEOUL,
+data = get_school_data(region_code=Region.SEOUL,
                                   school_code=school_name)
 print(data[0].school_code)
 ```
@@ -112,11 +118,11 @@ print(data[0].school_code)
 
 ### schoolschedule.schoolInfo
 ```python
-from Neis_API import Region, schoolschedule
+from Neis_API import Region, get_schedule_data
 
 
 school_name = "서운중학교"
-data = schoolschedule.get_schedule_data(region_code=Region.SEOUL,
+data = get_schedule_data(region_code=Region.SEOUL,
                                         school_code=school_name,
                                         date="20211207")
 print(data[0].event_name)
