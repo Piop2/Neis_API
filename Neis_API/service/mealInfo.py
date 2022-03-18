@@ -1,5 +1,5 @@
 import requests
-from .exceptions import check_status_code
+from .error import check_status_code
 
 URL = "https://open.neis.go.kr/hub/mealServiceDietInfo"
 
