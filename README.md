@@ -17,7 +17,7 @@ Neis_API는 나이스 교육정보 개방 포탈을 이용합니다.<br/>
 pip install Neis-API
 ```
 
-또는 밑에 있는 코드로 업그래이드 합니다.
+또는 밑에 있는 코드로 업그레이드 합니다.
 
 ```shell
 pip intall --upgrade Neis-API
