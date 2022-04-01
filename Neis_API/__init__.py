@@ -1,4 +1,4 @@
-from .region import Region
+from .region import *
 
 from .service.mealInfo import get_meal_data
 from .service.schoolInfo import get_school_data
