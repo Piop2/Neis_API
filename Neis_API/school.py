@@ -9,13 +9,16 @@ class School:
 
         self.school_data = school_data
 
+    def __str__(self):
+        return self.name
+
     @property
     def region_code(self):
         return self.school_data.region_code
 
     @property
     def region(self):
-        return
+        return self.school_data.region_name
 
     @property
     def code(self):
@@ -39,34 +42,31 @@ class School:
                                       key=key)[0]
         return School(school_data=school_data)
 
-    def __str__(self):
-        return self.name
-
-    def get_meal_info(self, meal_code=None, date=None, start_date=None, end_date=None, key=None,
-                      pindex: int = 1, psize: int = 100):
+    def get_meal_info(self, start_date=None, end_date=None, pindex: int = 1, psize: int = 100):
         """
-        신청주소: https://open.neis.go.kr/hub/mealServiceDietInfo
-        신청제한횟수: 제한없음
-        :param meal_code:식사코드
-        :param date:급식일자
-        :param start_date:급식시작일자
+        :param start_date:급식시작일자 또는 급식일자
         :param end_date: 급식종료일자
-        :param key: API 인증키
         :param pindex:페이지 위치
         :param psize:페이지 당 신청 숫자
         :return:검색된 모든 급식
         """
 
-        key = self.key if self.key is not None else key
+        date = None
+
+        if start_date is None:
+            raise TypeError("'NoneType' object cannot be a start_date")
+
+        if end_date is None:
+            date = start_date
+            start_date = None
 
         return get_meal_data(
             region_code=self.region_code,
             school_code=self.code,
-            meal_code=meal_code,
             date=date,
             start_date=start_date,
             end_date=end_date,
-            key=key,
+            key=self.key,
             pindex=pindex,
             psize=psize
         )
@@ -74,25 +74,17 @@ class School:
     def get_school_info(self):
         return self.school_data
 
-    def get_schedule_info(self, dght_crse_sc_nm=None, schul_crse_sc_nm=None, date=None, start_date=None, end_date=None,
-                          key=None,
-                          pindex: int = 1, psize: int = 100):
+    def get_schedule_info(self, dght_crse_sc_nm=None, schul_crse_sc_nm=None, date=None, start_date=None, end_date=None, pindex: int = 1, psize: int = 100):
         """
-        신청주소: https://open.neis.go.kr/hub/SchoolSchedule
-        신청제한횟수: 제한없음
         :param dght_crse_sc_nm: 주야과정명
         :param schul_crse_sc_nm: 학교과정명
         :param date: 학사일자
         :param start_date: 학사시작일자
         :param end_date: 학사종료일자
-        :param key: API 인증키
         :param pindex: 페이지 위치
         :param psize: 페이지 당 신청 숫자 (필수)
         :return: 검색된 모든 학교 (필수)
         """
-
-        key = self.key if self.key is not None else key
-
         return get_schedule_data(
             region_code=self.region_code,
             school_code=self.code,
@@ -101,7 +93,7 @@ class School:
             date=date,
             start_date=start_date,
             end_date=end_date,
-            key=key,
+            key=self.key,
             pindex=pindex,
             psize=psize
         )
