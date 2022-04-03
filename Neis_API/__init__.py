@@ -6,3 +6,5 @@ from .service.schoolschedule import get_schedule_data
 
 from .school import School
 
+import urllib3
+urllib3.disable_warnings()
