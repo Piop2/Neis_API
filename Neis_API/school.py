@@ -1,32 +1,63 @@
-from .service.mealInfo import get_meal_data
-from .service.schoolInfo import get_school_data
-from .service.schoolschedule import get_schedule_data
+from .service import *
 
 
 class School:
-    def __init__(self, school_data, key=None):
-        self.key = key
+    def __init__(self, *args, key=None):
+        self._region = None
+        self._name = None
+        self._code = None
 
-        self.school_data = school_data
+        print(isinstance(args, schoolInfo.SchoolInfo))
+
+        if len(args) > 1:
+            pass
+        elif isinstance(args, schoolMeal.SchoolMeal) or isinstance(args, schoolInfo.SchoolInfo) or isinstance(args, schoolSchedule.SchoolSchedule):
+            self._region = args.region_code
+            self._name = args.school_name
+            self._code = args.school_code
+
+    def __name__(self):
+        return self._name
 
     def __str__(self):
-        return self.name
+        return self._name
 
     @property
     def region_code(self):
-        return self.school_data.region_code
+        return self._region
 
     @property
-    def region(self):
-        return self.school_data.region_name
+    def region_name(self):
+        regions = {
+            'B10' : 'SEOUL',
+            'C10' : 'BUSAN',
+            'D10' : 'DAEGU',
+            'E10' : 'INCHEON',
+            'F10' : 'GWANGJU',
+            'G10' : 'DAEJEON',
+            'H10' : 'ULSAN',
+            'I10' : 'SEJONG',
+            'J10' : 'GYEONGGI',
+            'K10' : 'GANGWON',
+            'M10' : 'CHUNGBUK',
+            'N10' : 'CHUNGNAM',
+            'P10' : 'JEONBUK',
+            'Q10' : 'JEONNAM',
+            'R10' : 'GYEONGBUK',
+            'S10' : 'GYEONGNAM',
+            'T10' : 'JEJU',
+            'V10' : 'FORIENGER'
+        }
+
+        return regions[self._region]
 
     @property
-    def code(self):
-        return self.school_data.school_code
+    def school_code(self):
+        return self._code
 
     @property
-    def name(self):
-        return self.school_data.school_name
+    def school_name(self):
+        return self._name
 
     @classmethod
     def find(cls, region_code, school_code, key=None):
@@ -37,10 +68,10 @@ class School:
         :param key: API 인증키
         :return: class School
         """
-        school_data = get_school_data(region_code=region_code,
+        school_data = schoolInfo.get_school_data(region_code=region_code,
                                       school_code=school_code,
                                       key=key)[0]
-        return School(school_data=school_data)
+        return School(school_data)
 
     def get_meal_info(self, start_date=None, end_date=None, pindex: int = 1, psize: int = 100):
         """
@@ -60,7 +91,7 @@ class School:
             date = start_date
             start_date = None
 
-        return get_meal_data(
+        return schoolMeal.get_meal_data(
             region_code=self.region_code,
             school_code=self.code,
             date=date,
@@ -85,7 +116,7 @@ class School:
         :param psize: 페이지 당 신청 숫자 (필수)
         :return: 검색된 모든 학교 (필수)
         """
-        return get_schedule_data(
+        return schoolSchedule.get_schedule_data(
             region_code=self.region_code,
             school_code=self.code,
             dght_crse_sc_nm=dght_crse_sc_nm,
