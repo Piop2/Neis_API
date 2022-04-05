@@ -1,3 +1,4 @@
-from .schoolMeal import get_meal_data
-from .schoolInfo import get_school_data
-from .schoolSchedule import get_schedule_data
+import Neis_API.service.schoolMeal
+import Neis_API.service.schoolInfo
+import Neis_API.service.schoolschedule
+import Neis_API.service.error
