@@ -3,11 +3,14 @@ from .service import *
 
 class School:
     def __init__(self, *args, key=None):
+        """
+        School 객체를 지정하여 여러 정보를 불러옵니다
+        :param args: (school_code), (region, school_code), (SchoolMeal / SchoolInfo / Schedule)
+        :param key: API KEY
+        """
         self._region = None
-        self._name = None
         self._code = None
 
-        print(isinstance(args, schoolInfo.SchoolInfo))
 
         if len(args) > 1:
             pass
@@ -16,12 +19,6 @@ class School:
             self._name = args.school_name
             self._code = args.school_code
 
-    def __name__(self):
-        return self._name
-
-    def __str__(self):
-        return self._name
-
     @property
     def region_code(self):
         return self._region
@@ -29,24 +26,24 @@ class School:
     @property
     def region_name(self):
         regions = {
-            'B10' : 'SEOUL',
-            'C10' : 'BUSAN',
-            'D10' : 'DAEGU',
-            'E10' : 'INCHEON',
-            'F10' : 'GWANGJU',
-            'G10' : 'DAEJEON',
-            'H10' : 'ULSAN',
-            'I10' : 'SEJONG',
-            'J10' : 'GYEONGGI',
-            'K10' : 'GANGWON',
-            'M10' : 'CHUNGBUK',
-            'N10' : 'CHUNGNAM',
-            'P10' : 'JEONBUK',
-            'Q10' : 'JEONNAM',
-            'R10' : 'GYEONGBUK',
-            'S10' : 'GYEONGNAM',
-            'T10' : 'JEJU',
-            'V10' : 'FORIENGER'
+            'B10': 'SEOUL',
+            'C10': 'BUSAN',
+            'D10': 'DAEGU',
+            'E10': 'INCHEON',
+            'F10': 'GWANGJU',
+            'G10': 'DAEJEON',
+            'H10': 'ULSAN',
+            'I10': 'SEJONG',
+            'J10': 'GYEONGGI',
+            'K10': 'GANGWON',
+            'M10': 'CHUNGBUK',
+            'N10': 'CHUNGNAM',
+            'P10': 'JEONBUK',
+            'Q10': 'JEONNAM',
+            'R10': 'GYEONGBUK',
+            'S10': 'GYEONGNAM',
+            'T10': 'JEJU',
+            'V10': 'FORIENGER'
         }
 
         return regions[self._region]
@@ -54,10 +51,6 @@ class School:
     @property
     def school_code(self):
         return self._code
-
-    @property
-    def school_name(self):
-        return self._name
 
     @classmethod
     def find(cls, region_code, school_code, key=None):
@@ -69,8 +62,8 @@ class School:
         :return: class School
         """
         school_data = schoolInfo.get_school_data(region_code=region_code,
-                                      school_code=school_code,
-                                      key=key)[0]
+                                                 school_code=school_code,
+                                                 key=key)[0]
         return School(school_data)
 
     def get_meal_info(self, start_date=None, end_date=None, pindex: int = 1, psize: int = 100):
@@ -105,7 +98,8 @@ class School:
     def get_school_info(self):
         return self.school_data
 
-    def get_schedule_info(self, dght_crse_sc_nm=None, schul_crse_sc_nm=None, date=None, start_date=None, end_date=None, pindex: int = 1, psize: int = 100):
+    def get_schedule_info(self, dght_crse_sc_nm=None, schul_crse_sc_nm=None, date=None, start_date=None, end_date=None,
+                          pindex: int = 1, psize: int = 100):
         """
         :param dght_crse_sc_nm: 주야과정명
         :param schul_crse_sc_nm: 학교과정명
