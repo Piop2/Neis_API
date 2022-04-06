@@ -1,0 +1,2 @@
+class DateRangeError(Exception):
+    pass

@@ -38,7 +38,7 @@ R_JEJU = "T10"
 R_FORIENGER = "V10"
 
 
-def get_region_name(region):
+def region_name(region):
     regions = {
         'B10': 'SEOUL',
         'C10': 'BUSAN',

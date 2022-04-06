@@ -1,5 +1,7 @@
 from Neis_API.service import schoolMeal, schoolInfo, schoolSchedule
-from Neis_API.region import get_region_name
+from Neis_API.region import region_name
+
+from Neis_API.exceptions import *
 
 
 class School:
@@ -26,7 +28,7 @@ class School:
 
     @property
     def region_name(self):
-        return get_region_name(self._region)
+        return region_name(self._region)
 
     @property
     def school_code(self):
@@ -47,28 +49,26 @@ class School:
                                                  key=key)[0]
         return School(school_data)
 
-    def get_meal_info(self, start_date=None, end_date=None, pindex: int = 1, psize: int = 100):
+    def get_meal(self, *args, pindex: int = 1, psize: int = 100):
         """
-        :param start_date:급식시작일자 또는 급식일자
-        :param end_date: 급식종료일자
-        :param pindex:페이지 위치
-        :param psize:페이지 당 신청 숫자
-        :return:검색된 모든 급식
+        get meal_data with date range or date
         """
 
-        date = None
+        start_date = None
+        end_date = None
 
-        if start_date is None:
-            raise TypeError("'NoneType' object cannot be a start_date")
-
-        if end_date is None:
-            date = start_date
-            start_date = None
+        if len(args) == 1:
+            start_date = args[0]
+            end_date = args[0]
+        elif len(args) == 2:
+            start_date = args[0]
+            end_date = args[1]
+        else:
+            raise DateRangeError("Date range could be start_date~end_date or date")
 
         return schoolMeal.get_meal_data(
             region_code=self.region_code,
             school_code=self.school_code,
-            date=date,
             start_date=start_date,
             end_date=end_date,
             key=self._key,
@@ -76,21 +76,11 @@ class School:
             psize=psize
         )
 
-    def get_school_info(self):
-        return self.school_data
+    def get_school(self):
+        return
 
-    def get_schedule_info(self, dght_crse_sc_nm=None, schul_crse_sc_nm=None, date=None, start_date=None, end_date=None,
+    def get_schedule(self, dght_crse_sc_nm=None, schul_crse_sc_nm=None, date=None, start_date=None, end_date=None,
                           pindex: int = 1, psize: int = 100):
-        """
-        :param dght_crse_sc_nm: 주야과정명
-        :param schul_crse_sc_nm: 학교과정명
-        :param date: 학사일자
-        :param start_date: 학사시작일자
-        :param end_date: 학사종료일자
-        :param pindex: 페이지 위치
-        :param psize: 페이지 당 신청 숫자 (필수)
-        :return: 검색된 모든 학교 (필수)
-        """
         return schoolSchedule.get_schedule_data(
             region_code=self.region_code,
             school_code=self.code,
