@@ -4,6 +4,10 @@ urllib3.disable_warnings()
 
 from Neis_API.region import *
 
+import Neis_API.date
+
+Date = date.Date
+
 import Neis_API.service
 
 get_meal = Neis_API.service.schoolMeal.get_meal_data
