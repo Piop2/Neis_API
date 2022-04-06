@@ -13,12 +13,12 @@ class School:
         """
         self._region = None
         self._code = None
-        self._key = None
-
+        self._key = key
 
         if len(args) == 2:
             self._region, self._code = args
-        elif isinstance(args[0], schoolMeal.SchoolMeal) or isinstance(args[0], schoolInfo.SchoolInfo) or isinstance(args[0], schoolSchedule.SchoolSchedule):
+        elif isinstance(args[0], schoolMeal.SchoolMeal) or isinstance(args[0], schoolInfo.SchoolInfo) or isinstance(
+                args[0], schoolSchedule.SchoolSchedule):
             self._region = args[0].region_code
             self._code = args[0].school_code
 
@@ -35,7 +35,7 @@ class School:
         return self._code
 
     @classmethod
-    def find(cls, region_code: str=None, school_code=None, school_name=None, key=None):
+    def find(cls, region_code: str = None, school_code=None, school_name=None, key=None):
         """
         지역코드와 학교코드로 학교를 찾고 School객체를 리합니다.
         :param region_code: 지역코드
@@ -80,7 +80,7 @@ class School:
         return
 
     def get_schedule(self, dght_crse_sc_nm=None, schul_crse_sc_nm=None, date=None, start_date=None, end_date=None,
-                          pindex: int = 1, psize: int = 100):
+                     pindex: int = 1, psize: int = 100):
         return schoolSchedule.get_schedule_data(
             region_code=self.region_code,
             school_code=self.code,

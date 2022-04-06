@@ -10,7 +10,7 @@ class Date:
     @staticmethod
     def today():
         today = datetime.today()
-        return Date(today.year, today.month, today.day)
+        return Date(year=today.year, month=today.month, day=today.day)
 
     def __str__(self):
         return "%i.%02d.%02d" % (self.year, self.month, self.day)

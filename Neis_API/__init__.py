@@ -6,7 +6,7 @@ from Neis_API.region import *
 
 import Neis_API.date
 
-Date = date.Date
+Date = Neis_API.date.Date
 
 import Neis_API.service
 
