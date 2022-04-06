@@ -1,23 +1,24 @@
-from .service import *
+from Neis_API.service import schoolMeal, schoolInfo, schoolSchedule
+from Neis_API.region import get_region_name
 
 
 class School:
     def __init__(self, *args, key=None):
         """
         School 객체를 지정하여 여러 정보를 불러옵니다
-        :param args: (school_code), (region, school_code), (SchoolMeal / SchoolInfo / Schedule)
+        :param args: (region, school_code), (SchoolMeal / SchoolInfo / Schedule)
         :param key: API KEY
         """
         self._region = None
         self._code = None
+        self._key = None
 
 
-        if len(args) > 1:
-            pass
-        elif isinstance(args, schoolMeal.SchoolMeal) or isinstance(args, schoolInfo.SchoolInfo) or isinstance(args, schoolSchedule.SchoolSchedule):
-            self._region = args.region_code
-            self._name = args.school_name
-            self._code = args.school_code
+        if len(args) == 2:
+            self._region, self._code = args
+        elif isinstance(args[0], schoolMeal.SchoolMeal) or isinstance(args[0], schoolInfo.SchoolInfo) or isinstance(args[0], schoolSchedule.SchoolSchedule):
+            self._region = args[0].region_code
+            self._code = args[0].school_code
 
     @property
     def region_code(self):
@@ -25,35 +26,14 @@ class School:
 
     @property
     def region_name(self):
-        regions = {
-            'B10': 'SEOUL',
-            'C10': 'BUSAN',
-            'D10': 'DAEGU',
-            'E10': 'INCHEON',
-            'F10': 'GWANGJU',
-            'G10': 'DAEJEON',
-            'H10': 'ULSAN',
-            'I10': 'SEJONG',
-            'J10': 'GYEONGGI',
-            'K10': 'GANGWON',
-            'M10': 'CHUNGBUK',
-            'N10': 'CHUNGNAM',
-            'P10': 'JEONBUK',
-            'Q10': 'JEONNAM',
-            'R10': 'GYEONGBUK',
-            'S10': 'GYEONGNAM',
-            'T10': 'JEJU',
-            'V10': 'FORIENGER'
-        }
-
-        return regions[self._region]
+        return get_region_name(self._region)
 
     @property
     def school_code(self):
         return self._code
 
     @classmethod
-    def find(cls, region_code, school_code, key=None):
+    def find(cls, region_code: str=None, school_code=None, school_name=None, key=None):
         """
         지역코드와 학교코드로 학교를 찾고 School객체를 리합니다.
         :param region_code: 지역코드
@@ -63,6 +43,7 @@ class School:
         """
         school_data = schoolInfo.get_school_data(region_code=region_code,
                                                  school_code=school_code,
+                                                 school_name=school_name,
                                                  key=key)[0]
         return School(school_data)
 
@@ -86,11 +67,11 @@ class School:
 
         return schoolMeal.get_meal_data(
             region_code=self.region_code,
-            school_code=self.code,
+            school_code=self.school_code,
             date=date,
             start_date=start_date,
             end_date=end_date,
-            key=self.key,
+            key=self._key,
             pindex=pindex,
             psize=psize
         )
