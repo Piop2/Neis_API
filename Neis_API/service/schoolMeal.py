@@ -48,7 +48,7 @@ def get_meal_data(region, school_code, meal_code=None, date=None,
 
     check_status_code(status_code)
 
-    print(request_json[1]["row"][0]["DDISH_NM"])
+    print(request_json["mealServiceDietInfo"][1]["row"][0]["DDISH_NM"])
     return
 
 
