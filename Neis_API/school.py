@@ -35,7 +35,7 @@ class School:
         return self._code
 
     @classmethod
-    def find(cls, region_code: str = None, school_code=None, school_name=None, key=None):
+    def find(cls, region_code=None, school_code=None, school_name=None, key=None):
         """
         지역코드와 학교코드로 학교를 찾고 School객체를 리합니다.
         :param region_code: 지역코드
@@ -67,7 +67,7 @@ class School:
             raise DateRangeError("Date range could be start_date~end_date or date")
 
         return schoolMeal.get_meal_data(
-            region_code=self.region_code,
+            region=self.region_code,
             school_code=self.school_code,
             start_date=start_date,
             end_date=end_date,

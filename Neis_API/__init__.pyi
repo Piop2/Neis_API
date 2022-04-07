@@ -1,3 +1,9 @@
-from Neis_API import  date
+from region import *
+import date
+import school
+
+def region_name(region_code:str) -> str: ...
 
 class Date(date.Date): ...
+
+class School(school.School): ...
