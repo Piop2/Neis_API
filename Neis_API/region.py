@@ -1,44 +1,23 @@
-"""
-SEOUL : B10
-BUSAN : C10
-DAEGU : D10
-INCHEON : E10
-GWANGJU : F10
-DAEJEON : G10
-ULSAN : H10
-SEJONG : I10
-GYEONGGI : J10
-GANGWON : K10
-CHUNGBUK : M10
-CHUNGNAM : N10
-JEONBUK : P10
-JEONNAM : Q10
-GYEONGBUK : R10
-GYEONGNAM : S10
-JEJU : T10
-FORIENGER : V10
-"""
-R_SEOUL = "B10"
-R_BUSAN = "C10"
-R_DAEGU = "D10"
-R_INCHEON = "E10"
-R_GWANGJU = "F10"
-R_DAEJEON = "G10"
-R_ULSAN = "H10"
-R_SEJONG = "I10"
-R_GYEONGGI = "J10"
-R_GANGWON = "K10"
-R_CHUNGBUK = "M10"
-R_CHUNGNAM = "N10"
-R_JEONBUK = "P10"
-R_JEONNAM = "Q10"
-R_GYEONGBUK = "R10"
-R_GYEONGNAM = "S10"
-R_JEJU = "T10"
-R_FORIENGER = "V10"
+R_SEOUL: str     = "B10"
+R_BUSAN: str     = "C10"
+R_DAEGU: str     = "D10"
+R_INCHEON: str   = "E10"
+R_GWANGJU: str   = "F10"
+R_DAEJEON: str   = "G10"
+R_ULSAN: str     = "H10"
+R_SEJONG: str    = "I10"
+R_GYEONGGI: str  = "J10"
+R_GANGWON: str   = "K10"
+R_CHUNGBUK: str  = "M10"
+R_CHUNGNAM: str  = "N10"
+R_JEONBUK: str   = "P10"
+R_JEONNAM: str   = "Q10"
+R_GYEONGBUK: str = "R10"
+R_GYEONGNAM: str = "S10"
+R_JEJU: str      = "T10"
+R_FORIENGER: str = "V10"
 
-
-def region_name(region):
+def region_name(region: str) -> None:
     regions = {
         'B10': 'SEOUL',
         'C10': 'BUSAN',

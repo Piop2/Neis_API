@@ -57,8 +57,9 @@ class Info200(Exception):
         super().__init__("해당하는 데이터가 없습니다.")
         return
 
+from ..exceptions import UnkownErrorCode
 
-def check_status_code(status_code):
+def _check_status_code(status_code: str) -> None:
     if status_code == "ERROR-300":
         raise Error300()
     elif status_code == "ERROR-290":
@@ -79,4 +80,6 @@ def check_status_code(status_code):
         raise Info300()
     elif status_code == "INFO-200":
         raise Info200()
+    else:
+        raise UnkownErrorCode(status_code)
     return

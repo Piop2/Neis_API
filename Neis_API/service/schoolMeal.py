@@ -1,7 +1,7 @@
 import json
 
 import requests
-from .error import check_status_code
+from .error import _check_status_code
 
 URL = "https://open.neis.go.kr/hub/mealServiceDietInfo"
 
@@ -46,7 +46,7 @@ def get_meal_data(region, school_code, meal_code=None, date=None,
     except KeyError:
         status_code = request_json["RESULT"]["CODE"]
 
-    check_status_code(status_code)
+    _check_status_code(status_code)
 
     print(request_json["mealServiceDietInfo"][1]["row"][0]["DDISH_NM"])
     return

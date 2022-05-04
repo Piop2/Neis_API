@@ -1,5 +1,5 @@
 import requests
-from .error import check_status_code
+from .error import _check_status_code
 
 URL = "https://open.neis.go.kr/hub/schoolInfo"
 
@@ -43,7 +43,7 @@ def get_school_data(region_code=None, school_code=None, school_name=None, school
     except KeyError:
         status_code = request_json["RESULT"]["CODE"]
 
-    check_status_code(status_code)
+    _check_status_code(status_code)
 
     return tuple(SchoolInfo(data) for data in request_json["schoolInfo"][1]["row"])
 

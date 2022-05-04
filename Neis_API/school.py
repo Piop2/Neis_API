@@ -1,3 +1,4 @@
+from ast import Str
 from Neis_API.service import schoolMeal, schoolInfo, schoolSchedule
 from Neis_API.region import region_name
 
@@ -5,7 +6,11 @@ from Neis_API.exceptions import *
 
 
 class School:
-    def __init__(self, *args, key=None):
+    _region: str
+    _code: str
+    _key: str
+
+    def __init__(self, *args, key: str = None):
         """
         School 객체를 지정하여 여러 정보를 불러옵니다
         :param args: (region, school_code), (SchoolMeal / SchoolInfo / Schedule)
@@ -23,19 +28,19 @@ class School:
             self._code = args[0].school_code
 
     @property
-    def region_code(self):
+    def region_code(self) -> str:
         return self._region
 
     @property
-    def region_name(self):
+    def region_name(self) -> str:
         return region_name(self._region)
 
     @property
-    def school_code(self):
+    def school_code(self) -> str:
         return self._code
 
-    @classmethod
-    def find(cls, region_code=None, school_code=None, school_name=None, key=None):
+    @staticmethod
+    def find(region_code: str=None, school_code: str=None, school_name: str=None, key: str=None) -> School:
         """
         지역코드와 학교코드로 학교를 찾고 School객체를 리합니다.
         :param region_code: 지역코드
@@ -64,7 +69,7 @@ class School:
             start_date = args[0]
             end_date = args[1]
         else:
-            raise DateRangeError("Date range could be start_date~end_date or date")
+            raise DateRangeError()
 
         return schoolMeal.get_meal_data(
             region=self.region_code,

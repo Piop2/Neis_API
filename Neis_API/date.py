@@ -1,14 +1,17 @@
 from datetime import datetime
 
-
 class Date:
-    def __init__(self, year, month, day):
-        self._year = int(year)
-        self._month = int(month)
-        self._day = int(day)
+    _year: int
+    _month: int
+    _day: int
+
+    def __init__(self, year: int, month: int, day: int) -> None:
+        self._year = year
+        self._month = month
+        self._day = day
 
     @staticmethod
-    def today():
+    def today() -> Date:
         today = datetime.today()
         return Date(year=today.year, month=today.month, day=today.day)
 
@@ -16,16 +19,16 @@ class Date:
         return "%i.%02d.%02d" % (self.year, self.month, self.day)
 
     @property
-    def year(self):
+    def y(self) -> int:
         return self._year
 
     @property
-    def month(self):
+    def m(self) -> int:
         return self._month
 
     @property
-    def day(self):
+    def d(self) -> int:
         return self._day
 
-    def get(self):
+    def _get(self) -> str:
         return "%i%02d%02d" % (self.year, self.month, self.day)
