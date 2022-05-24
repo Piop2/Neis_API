@@ -5,7 +5,7 @@ import errors
 
 
 def get_request(url, service_name, params):
-    """get Neis service request"""
+    """get Neis service request and return raw data"""
     res = requests.get(url=url, params=params, verify=False, json=True)
     res.encoding = "UTF-8"
     json_s = res.text.replace("<br/>", "\n")
@@ -16,7 +16,7 @@ def get_request(url, service_name, params):
 
     _check_status_code(status_code=status_code)
 
-    return request
+    return _get_raw_data(request=request, service_name=service_name)
 
 
 def _loads_json(json_s):
@@ -60,3 +60,7 @@ def _check_status_code(status_code):
         raise errors.Info200()
     else:
         raise UnknownStatusCodeError(status_code)
+
+
+def _get_raw_data(request, service_name):
+    return request[service_name][1]["row"]
