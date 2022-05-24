@@ -57,7 +57,7 @@ class Info200(Exception):
         super().__init__("해당하는 데이터가 없습니다.")
         return
 
-from ..exceptions import UnkownErrorCode
+from Neis_API.exceptions import UnkownErrorCode
 
 def _check_status_code(status_code: str) -> None:
     if status_code == "ERROR-300":

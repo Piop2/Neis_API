@@ -1,3 +1,3 @@
-import Neis_API.service.schoolMeal
-import Neis_API.service.schoolInfo
-import Neis_API.service.schoolSchedule
+import Neis_API.service.school_meal
+import Neis_API.service.school_info
+import Neis_API.service.school_schedule
