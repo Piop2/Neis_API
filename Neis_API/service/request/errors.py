@@ -56,30 +56,3 @@ class Info200(Exception):
     def __init__(self):
         super().__init__("해당하는 데이터가 없습니다.")
         return
-
-from Neis_API.exceptions import UnkownErrorCode
-
-def _check_status_code(status_code: str) -> None:
-    if status_code == "ERROR-300":
-        raise Error300()
-    elif status_code == "ERROR-290":
-        raise Error290()
-    elif status_code == "ERROR-333":
-        raise Error333()
-    elif status_code == "ERROR-336":
-        raise Error336()
-    elif status_code == "ERROR-337":
-        raise Error337()
-    elif status_code == "ERROR-500":
-        raise Error500()
-    elif status_code == "ERROR-600":
-        raise Error600()
-    elif status_code == "ERROR-601":
-        raise Error601()
-    elif status_code == "INFO-300":
-        raise Info300()
-    elif status_code == "INFO-200":
-        raise Info200()
-    else:
-        raise UnkownErrorCode(status_code)
-    return
