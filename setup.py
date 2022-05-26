@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
     name="Neis_API",
-    version="0.7.1",
+    version="1.0.0",
     license="MIT",
     author="PIO",
     author_email="seungyounyou0220@gmail.com",
