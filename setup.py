@@ -18,7 +18,6 @@ setuptools.setup(
         "Operating System :: OS Independent"
     ],
     install_requires=[
-        "requests",
-        "urllib3"
+        "requests"
     ],
 )
