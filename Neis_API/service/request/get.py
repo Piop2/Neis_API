@@ -1,7 +1,7 @@
 import json
 import requests
 
-import errors
+from Neis_API.service.request.errors import *
 
 
 def get_request(url, service_name, params):
@@ -11,9 +11,7 @@ def get_request(url, service_name, params):
     json_s = res.text.replace("<br/>", "\n")
 
     request = _loads_json(json_s=json_s)
-
     status_code = _get_status_code(request=request, key=service_name)
-
     _check_status_code(status_code=status_code)
 
     return _get_raw_data(request=request, service_name=service_name)
@@ -39,25 +37,25 @@ class UnknownStatusCodeError(Exception):
 
 def _check_status_code(status_code):
     if status_code == "ERROR-300":
-        raise errors.Error300()
+        raise Error300()
     elif status_code == "ERROR-290":
-        raise errors.Error290()
+        raise Error290()
     elif status_code == "ERROR-333":
-        raise errors.Error333()
+        raise Error333()
     elif status_code == "ERROR-336":
-        raise errors.Error336()
+        raise Error336()
     elif status_code == "ERROR-337":
-        raise errors.Error337()
+        raise Error337()
     elif status_code == "ERROR-500":
-        raise errors.Error500()
+        raise Error500()
     elif status_code == "ERROR-600":
-        raise errors.Error600()
+        raise Error600()
     elif status_code == "ERROR-601":
-        raise errors.Error601()
+        raise Error601()
     elif status_code == "INFO-300":
-        raise errors.Info300()
+        raise Info300()
     elif status_code == "INFO-200":
-        raise errors.Info200()
+        raise Info200()
     else:
         raise UnknownStatusCodeError(status_code)
 

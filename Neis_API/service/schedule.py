@@ -1,5 +1,5 @@
 import requests
-from Neis_API.service.request import _check_status_code
+from Neis_API.service.request import get_request
 
 URL = "https://open.neis.go.kr/hub/SchoolSchedule"
 

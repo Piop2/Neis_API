@@ -1,6 +1,6 @@
 from ast import Str
-from Neis_API.service import school_meal, school_info, school_schedule
-from Neis_API.region import region_name
+from Neis_API.service import meal, info, schedule
+from Neis_API.utils import region_name
 
 from Neis_API.exceptions import *
 
