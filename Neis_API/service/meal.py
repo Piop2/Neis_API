@@ -25,15 +25,20 @@ def _get_meals(region, school_code, meal_code=None, date=None, start_date=None, 
     return get_request(url=__URL__, service_name=__SERVICE_NAME__, params=params)
 
 
+class MealInfo:
+    def __init__(self, meal):
+        pass
+
+
 class Meal:
+    _region_code: str
+    _school_code: str
+
+    _breakfast: MealInfo
+    _lunch: MealInfo
+    _dinner: MealInfo
+
     def __init__(self, meals: list):
-        self._region_code = None
-        self._school_code = None
-
-        self._breakfast = None
-        self._lunch = None
-        self._dinner = None
-
         # if meals length is 0 -> raise error
         if not meals:
             raise MealNotFoundError()
@@ -80,7 +85,5 @@ class Meal:
     def dinner(self):
         return self._dinner
 
-
-class MealInfo:
-    def __init__(self, meal):
-        pass
+    def get_school(self):
+        return
