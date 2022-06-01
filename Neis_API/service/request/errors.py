@@ -56,3 +56,9 @@ class Info200(Exception):
     def __init__(self):
         super().__init__("해당하는 데이터가 없습니다.")
         return
+
+
+class UnknownStatusCodeError(Exception):
+    def __init__(self, status_code):
+        super().__init__("Unknown service error: %s" % status_code)
+        return

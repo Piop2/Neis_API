@@ -29,12 +29,6 @@ def _get_status_code(request, key):
     return status_code
 
 
-class UnknownStatusCodeError(Exception):
-    def __init__(self, status_code):
-        super().__init__("Unknown service error: %s" % status_code)
-        return
-
-
 def _check_status_code(status_code):
     if status_code == "INFO-000":
         return
