@@ -1,4 +1,6 @@
 from Neis_API.service.request import get_request
+
+from Neis_API.service.exceptions import MealNotFoundError
 from Neis_API.service.exceptions import UnknownMealCodeError
 
 __SERVICE_NAME__ = "mealServiceDietInfo"
@@ -24,13 +26,21 @@ def _get_meals(region, school_code, meal_code=None, date=None, start_date=None, 
 
 
 class Meal:
-    def __init__(self, meals):
+    def __init__(self, meals: list):
         self._region_code = None
         self._school_code = None
 
         self._breakfast = None
         self._lunch = None
         self._dinner = None
+
+        # if meals length is 0 -> raise error
+        if not meals:
+            raise MealNotFoundError()
+        else:
+            meal = meals[0]
+            self._region_code = meal['ATPT_OFCDC_SC_CODE']
+            self._school_code = meal['SD_SCHUL_CODE']
 
         for meal in meals:
             meal_info = MealInfo(meal)
@@ -49,6 +59,26 @@ class Meal:
     def meal_date(cls, region, school_code, date):
         resp = _get_meals(region=region, school_code=school_code, date=date)
         return Meal(resp)
+
+    @property
+    def region_code(self):
+        return self._region_code
+
+    @property
+    def school_code(self):
+        return self._school_code
+
+    @property
+    def breakfast(self):
+        return self._breakfast
+
+    @property
+    def lunch(self):
+        return self._lunch
+
+    @property
+    def dinner(self):
+        return self._dinner
 
 
 class MealInfo:
