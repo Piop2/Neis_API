@@ -36,7 +36,9 @@ class UnknownStatusCodeError(Exception):
 
 
 def _check_status_code(status_code):
-    if status_code == "ERROR-300":
+    if status_code == "INFO-000":
+        return
+    elif status_code == "ERROR-300":
         raise Error300()
     elif status_code == "ERROR-290":
         raise Error290()
