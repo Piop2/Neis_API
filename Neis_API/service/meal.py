@@ -4,8 +4,8 @@ __SERVICE_NAME__ = "mealServiceDietInfo"
 __URL__ = "https://open.neis.go.kr/hub/mealServiceDietInfo"
 
 
-def get_meal(region, school_code, meal_code=None, date=None, start_date=None, end_date=None, key=None, index: int = 1,
-             size: int = 100):
+def _get_meals(region, school_code, meal_code=None, date=None, start_date=None, end_date=None, key=None, index: int = 1,
+               size: int = 100):
     params = {
         "KEY": key,
         "Type": "json",
@@ -22,24 +22,30 @@ def get_meal(region, school_code, meal_code=None, date=None, start_date=None, en
     return get_request(url=__URL__, service_name=__SERVICE_NAME__, params=params)
 
 
-def date_meal(region, school_code, *date):
-    start_date = None
-    end_date = None
+# def date_meal(region, school_code, *date):
+#     start_date = None
+#     end_date = None
+#
+#     if len(date) == 1:
+#         start_date = date[0]
+#         end_date = date[0]
+#     elif len(date) == 2:
+#         start_date = date[0]
+#         end_date = date[1]
+#     else:
+#         print("Hi, I am ERROR")
+#
+#     return get_meal(region=region, school_code=school_code, start_date=start_date, end_date=end_date)
 
-    if len(date) == 1:
-        start_date = date[0]
-        end_date = date[0]
-    elif len(date) == 2:
-        start_date = date[0]
-        end_date = date[1]
-    else:
-        print("Hi, I am ERROR")
 
-    return get_meal(region=region, school_code=school_code, start_date=start_date, end_date=end_date)
+class Meal:
+    def __init__(self, d):
+        _d = d
 
-
-class SchoolMeal:
-    pass
+    @classmethod
+    def meal_date(cls, region, school_code, date):
+        resp = _get_meals(region=region, school_code=school_code, date=date)[0]
+        return Meal(d=resp)
 
 
 class Breakfast:

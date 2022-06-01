@@ -14,7 +14,7 @@ def get_request(url, service_name, params):
     status_code = _get_status_code(request=request, key=service_name)
     _check_status_code(status_code=status_code)
 
-    return _get_raw_data(request=request, service_name=service_name)
+    return _get_row_data(request=request, service_name=service_name)
 
 
 def _loads_json(json_s):
@@ -62,5 +62,5 @@ def _check_status_code(status_code):
         raise UnknownStatusCodeError(status_code)
 
 
-def _get_raw_data(request, service_name):
+def _get_row_data(request, service_name):
     return request[service_name][1]["row"]

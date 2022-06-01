@@ -7,7 +7,7 @@ urllib3.disable_warnings()
 
 # service
 info = service.info
-meal = service.meal
+Meal = service.meal.Meal
 schedule = service.schedule
 
 # School = Neis_API.school.School
