@@ -1,4 +1,5 @@
 from Neis_API.service.request import get_request
+from Neis_API.service.exceptions import UnknownMealCodeError
 
 __SERVICE_NAME__ = "mealServiceDietInfo"
 __URL__ = "https://open.neis.go.kr/hub/mealServiceDietInfo"
@@ -22,39 +23,34 @@ def _get_meals(region, school_code, meal_code=None, date=None, start_date=None, 
     return get_request(url=__URL__, service_name=__SERVICE_NAME__, params=params)
 
 
-# def date_meal(region, school_code, *date):
-#     start_date = None
-#     end_date = None
-#
-#     if len(date) == 1:
-#         start_date = date[0]
-#         end_date = date[0]
-#     elif len(date) == 2:
-#         start_date = date[0]
-#         end_date = date[1]
-#     else:
-#         print("Hi, I am ERROR")
-#
-#     return get_meal(region=region, school_code=school_code, start_date=start_date, end_date=end_date)
-
-
 class Meal:
-    def __init__(self, d):
-        _d = d
+    def __init__(self, meals):
+        self._region_code = None
+        self._school_code = None
+
+        self._breakfast = None
+        self._lunch = None
+        self._dinner = None
+
+        for meal in meals:
+            meal_info = MealInfo(meal)
+
+            meal_code = meal["MMEAL_SC_CODE"]
+            if meal_code == 1:
+                self._breakfast = meal_info
+            elif meal_code == 2:
+                self._lunch = meal_info
+            elif meal_code == 3:
+                self._dinner = meal_info
+            else:
+                raise UnknownMealCodeError(meal_code=meal_code)
 
     @classmethod
     def meal_date(cls, region, school_code, date):
-        resp = _get_meals(region=region, school_code=school_code, date=date)[0]
-        return Meal(d=resp)
+        resp = _get_meals(region=region, school_code=school_code, date=date)
+        return Meal(resp)
 
 
-class Breakfast:
-    pass
-
-
-class Lunch:
-    pass
-
-
-class Dinner:
-    pass
+class MealInfo:
+    def __init__(self, meal):
+        pass

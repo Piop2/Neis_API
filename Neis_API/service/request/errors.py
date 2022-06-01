@@ -60,5 +60,5 @@ class Info200(Exception):
 
 class UnknownStatusCodeError(Exception):
     def __init__(self, status_code):
-        super().__init__("Unknown service error: %s" % status_code)
+        super().__init__("Unknown status error: %s" % status_code)
         return
