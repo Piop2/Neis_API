@@ -1,13 +1,12 @@
 from Neis_API.service.request import get_request
 
-from Neis_API.service.exceptions import MealNotFoundError
 from Neis_API.service.exceptions import UnknownMealCodeError
 
 __SERVICE_NAME__ = "mealServiceDietInfo"
 __URL__ = "https://open.neis.go.kr/hub/mealServiceDietInfo"
 
 
-def _get_meals(region, school_code, meal_code=None, date=None, start_date=None, end_date=None, key=None, index: int = 1,
+def _get_meals(region=None, school_code=None, meal_code=None, date=None, start_date=None, end_date=None, key=None, index: int = 1,
                size: int = 100):
     params = {
         "KEY": key,
@@ -26,42 +25,109 @@ def _get_meals(region, school_code, meal_code=None, date=None, start_date=None, 
 
 
 class MealInfo:
-    def __init__(self, meal):
-        pass
+    _date: str
+    _type: str
+    _population: str
+    _dish: str
+    _origin: str
+    _calory: str
+    _nutrition: str
 
+    def __init__(self, meal):
+        self.meal = meal
+
+        self._date = meal['MLSV_YMD'] # 날짜
+        self._type = meal['MMEAL_SC_NM'] # 식사 종류
+        self._population = meal['MLSV_FGR'] # 급식 인원 수
+        self._dish = meal['DDISH_NM'] # 식단
+        self._origin = meal['ORPLC_INFO'] # 원산지
+        self._calory = meal['CAL_INFO'] # 칼로리
+        self._nutrition = meal['NTR_INFO'] # 영양정보
+
+    @property
+    def dishs(self) -> str:
+        return self._dish.replace("<br/>", "\n")
+
+    @property
+    def dishl(self) -> list:
+        return self._dish.split("<br/>")
+
+    @property
+    def date(self):
+        return self._date
+
+    @property
+    def type(self):
+        return self._type
+
+    @property
+    def population(self):
+        return self._population
+
+    @property
+    def origins(self):
+        return self._origin.replace("<br/>", "\n")
+
+    @property
+    def originl(self):
+        return self._origin.split("<br/>")
+
+    @property
+    def calorys(self):
+        return self._calory.replace("<br/>", "\n")
+
+    @property
+    def caloryl(self):
+        return self._calory.split("<br/>")
+
+    @property
+    def nutritions(self):
+        return self._nutrition.replace("<br/>", "\n")
+
+    @property
+    def nutritionl(self):
+        return self._nutrition.split("<br/>")
 
 class Meal:
     _region_code: str
     _school_code: str
+    _school_name: str
+
+    _exist:bool=True
 
     _breakfast: MealInfo
     _lunch: MealInfo
     _dinner: MealInfo
 
     def __init__(self, meals: list):
+        self.meals = meals
+
         # if meals length is 0 -> raise error
-        if not meals:
-            raise MealNotFoundError()
-        else:
+        try:
             meal = meals[0]
+        except IndexError:
+            self._exist = False
+
+        if self._exist:
             self._region_code = meal['ATPT_OFCDC_SC_CODE']
             self._school_code = meal['SD_SCHUL_CODE']
+            self._school_name = meal['SCHUL_NM']
 
-        for meal in meals:
-            meal_info = MealInfo(meal)
+            for meal in meals:
+                meal_info = MealInfo(meal)
 
-            meal_code = meal["MMEAL_SC_CODE"]
-            if meal_code == 1:
-                self._breakfast = meal_info
-            elif meal_code == 2:
-                self._lunch = meal_info
-            elif meal_code == 3:
-                self._dinner = meal_info
-            else:
-                raise UnknownMealCodeError(meal_code=meal_code)
+                meal_code = meal['MMEAL_SC_CODE']
+                if meal_code == "1":
+                    self._breakfast = meal_info
+                elif meal_code == "2":
+                    self._lunch = meal_info
+                elif meal_code == "3":
+                    self._dinner = meal_info
+                else:
+                    raise UnknownMealCodeError(meal_code=meal_code)
 
     @classmethod
-    def meal_date(cls, region, school_code, date):
+    def meal_date(cls, region:str, school_code:str, date:str):
         resp = _get_meals(region=region, school_code=school_code, date=date)
         return Meal(resp)
 
@@ -72,6 +138,10 @@ class Meal:
     @property
     def school_code(self):
         return self._school_code
+
+    @property
+    def school_name(self):
+        return self._school_name
 
     @property
     def breakfast(self):
