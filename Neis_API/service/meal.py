@@ -1,14 +1,15 @@
+from Neis_API.school import School
+
 from Neis_API.service.request import get_request
 
 from Neis_API.service.exceptions import UnknownMealCodeError
 
-__SERVICE_NAME__ = "mealServiceDietInfo"
-__URL__ = "https://open.neis.go.kr/hub/mealServiceDietInfo"
+SERVICE_NAME = "mealServiceDietInfo"
+URL = "https://open.neis.go.kr/hub/mealServiceDietInfo"
 
 
 def _get_meals(region=None, school_code=None, meal_code=None, date=None, start_date=None, end_date=None, key=None,
-               index: int = 1,
-               size: int = 100):
+               index: int = 1, size: int = 100):
     params = {
         "KEY": key,
         "Type": "json",
@@ -22,7 +23,7 @@ def _get_meals(region=None, school_code=None, meal_code=None, date=None, start_d
         "MLSV_TO_YMD": end_date
     }
 
-    return get_request(url=__URL__, service_name=__SERVICE_NAME__, params=params)
+    return get_request(url=URL, service_name=SERVICE_NAME, params=params)
 
 
 class MealInfo:
@@ -211,7 +212,7 @@ class Meal:
         return self._exist
 
     def get_school(self):
-        return
+        return School(region_code=self._region_code, school_code=self._school_code)
 
     @property
     def region_code(self):
