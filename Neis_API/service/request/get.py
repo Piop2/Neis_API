@@ -9,7 +9,8 @@ def get_request(url, service_name, params):
     res = requests.get(url=url, params=params, verify=False, json=True)
     res.encoding = "UTF-8"
 
-    request = _loads_json(json_s=res.text)
+    text = res.text.replace("<br/>", "\n")
+    request = _loads_json(json_s=text)
     status_code = _get_status_code(request=request, key=service_name)
     _check_status_code(status_code=status_code)
 

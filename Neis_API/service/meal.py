@@ -6,7 +6,8 @@ __SERVICE_NAME__ = "mealServiceDietInfo"
 __URL__ = "https://open.neis.go.kr/hub/mealServiceDietInfo"
 
 
-def _get_meals(region=None, school_code=None, meal_code=None, date=None, start_date=None, end_date=None, key=None, index: int = 1,
+def _get_meals(region=None, school_code=None, meal_code=None, date=None, start_date=None, end_date=None, key=None,
+               index: int = 1,
                size: int = 100):
     params = {
         "KEY": key,
@@ -36,21 +37,21 @@ class MealInfo:
     def __init__(self, meal):
         self.meal = meal
 
-        self._date = meal['MLSV_YMD'] # 날짜
-        self._type = meal['MMEAL_SC_NM'] # 식사 종류
-        self._population = meal['MLSV_FGR'] # 급식 인원 수
-        self._dish = meal['DDISH_NM'] # 식단
-        self._origin = meal['ORPLC_INFO'] # 원산지
-        self._calory = meal['CAL_INFO'] # 칼로리
-        self._nutrition = meal['NTR_INFO'] # 영양정보
+        self._date = meal['MLSV_YMD']  # 날짜
+        self._type = meal['MMEAL_SC_NM']  # 식사 종류
+        self._population = meal['MLSV_FGR']  # 급식 인원 수
+        self._dish = meal['DDISH_NM']  # 식단
+        self._origin = meal['ORPLC_INFO']  # 원산지
+        self._calory = meal['CAL_INFO']  # 칼로리
+        self._nutrition = meal['NTR_INFO']  # 영양정보
+
+    @property
+    def dish(self) -> list:
+        return self._dish.split("\n")
 
     @property
     def dishs(self) -> str:
-        return self._dish.replace("<br/>", "\n")
-
-    @property
-    def dishl(self) -> list:
-        return self._dish.split("<br/>")
+        return self._dish
 
     @property
     def date(self):
@@ -65,35 +66,36 @@ class MealInfo:
         return self._population
 
     @property
-    def origins(self):
-        return self._origin.replace("<br/>", "\n")
+    def origin(self):
+        return self._origin.split("\n")
 
     @property
-    def originl(self):
-        return self._origin.split("<br/>")
+    def origins(self):
+        return self._origin
+
+    @property
+    def calory(self):
+        return self._calory.split("\n")
 
     @property
     def calorys(self):
-        return self._calory.replace("<br/>", "\n")
+        return self._calory
 
     @property
-    def caloryl(self):
-        return self._calory.split("<br/>")
+    def nutrition(self):
+        return self._nutrition.split("\n")
 
     @property
     def nutritions(self):
-        return self._nutrition.replace("<br/>", "\n")
+        return self._nutrition
 
-    @property
-    def nutritionl(self):
-        return self._nutrition.split("<br/>")
 
 class Meal:
     _region_code: str
     _school_code: str
     _school_name: str
 
-    _exist:bool=True
+    _exist: bool = True
 
     _breakfast: MealInfo
     _lunch: MealInfo
@@ -102,13 +104,8 @@ class Meal:
     def __init__(self, meals: list):
         self.meals = meals
 
-        # if meals length is 0 -> raise error
-        try:
+        if len(meals):
             meal = meals[0]
-        except IndexError:
-            self._exist = False
-
-        if self._exist:
             self._region_code = meal['ATPT_OFCDC_SC_CODE']
             self._school_code = meal['SD_SCHUL_CODE']
             self._school_name = meal['SCHUL_NM']
@@ -127,7 +124,7 @@ class Meal:
                     raise UnknownMealCodeError(meal_code=meal_code)
 
     @classmethod
-    def meal_date(cls, region:str, school_code:str, date:str):
+    def meal_date(cls, region: str, school_code: str, date: str):
         resp = _get_meals(region=region, school_code=school_code, date=date)
         return Meal(resp)
 
