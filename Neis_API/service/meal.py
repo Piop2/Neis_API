@@ -1,7 +1,5 @@
 from Neis_API.service.request import get_request
 
-from Neis_API.service.exceptions import UnknownMealCodeError
-
 __SERVICE_NAME__ = "mealServiceDietInfo"
 __URL__ = "https://open.neis.go.kr/hub/mealServiceDietInfo"
 
@@ -26,7 +24,6 @@ def _get_meals(region=None, school_code=None, meal_code=None, date=None, start_d
 
 
 class MealInfo:
-    _date: str
     _type: str
     _population: str
     _dish: str
@@ -34,16 +31,23 @@ class MealInfo:
     _calory: str
     _nutrition: str
 
-    def __init__(self, meal):
-        self.meal = meal
+    _exist: bool = False
 
-        self._date = meal['MLSV_YMD']  # 날짜
-        self._type = meal['MMEAL_SC_NM']  # 식사 종류
-        self._population = meal['MLSV_FGR']  # 급식 인원 수
-        self._dish = meal['DDISH_NM']  # 식단
-        self._origin = meal['ORPLC_INFO']  # 원산지
-        self._calory = meal['CAL_INFO']  # 칼로리
-        self._nutrition = meal['NTR_INFO']  # 영양정보
+    def __init__(self, meal):
+        # self.meal = meal
+
+        if meal:
+            self._exist = True
+
+            self._type = meal['MMEAL_SC_NM']  # 식사 종류
+            self._population = meal['MLSV_FGR']  # 급식 인원 수
+            self._dish = meal['DDISH_NM']  # 식단
+            self._origin = meal['ORPLC_INFO']  # 원산지
+            self._calory = meal['CAL_INFO']  # 칼로리
+            self._nutrition = meal['NTR_INFO']  # 영양정보
+
+    def is_exist(self):
+        return self._exist
 
     @property
     def dish(self) -> list:
@@ -52,10 +56,6 @@ class MealInfo:
     @property
     def dishs(self) -> str:
         return self._dish
-
-    @property
-    def date(self):
-        return self._date
 
     @property
     def type(self):
@@ -94,21 +94,30 @@ class Meal:
     _region_code: str
     _school_code: str
     _school_name: str
+    _date: str
 
-    _exist: bool = True
+    _exist: bool
 
     _breakfast: MealInfo
     _lunch: MealInfo
     _dinner: MealInfo
 
     def __init__(self, meals: list):
-        self.meals = meals
+        # self.meals = meals
+
+        self._exist = False
+        self._breakfast = MealInfo({})
+        self._lunch = MealInfo({})
+        self._dinner = MealInfo({})
 
         if len(meals):
+            self._exist = True
+
             meal = meals[0]
             self._region_code = meal['ATPT_OFCDC_SC_CODE']
             self._school_code = meal['SD_SCHUL_CODE']
             self._school_name = meal['SCHUL_NM']
+            self._date = meal['MLSV_YMD']
 
             for meal in meals:
                 meal_info = MealInfo(meal)
@@ -120,13 +129,35 @@ class Meal:
                     self._lunch = meal_info
                 elif meal_code == "3":
                     self._dinner = meal_info
-                else:
-                    raise UnknownMealCodeError(meal_code=meal_code)
 
     @classmethod
     def meal_date(cls, region: str, school_code: str, date: str):
         resp = _get_meals(region=region, school_code=school_code, date=date)
-        return Meal(resp)
+        return cls(resp)
+
+    @classmethod
+    def meal_daterange(cls, region: str, school_code: str, start: str, end: str):
+        resp = _get_meals(region=region, school_code=school_code, start_date=start, end_date=end)
+
+        # date of meal: MLSV_YMD
+
+        meal_date: dict[str:list[dict]] = {}
+        for r in resp:
+            date = r['MLSV_YMD']
+            if date in meal_date:
+                meal_date[date].append(r)
+            else:
+                meal_date[date] = []
+
+        meals = list(map(lambda x: Meal(x), meal_date.values()))
+        return meals
+
+    def is_exist(self):
+        """오늘이 급식일 인가?"""
+        return self._exist
+
+    def get_school(self):
+        return
 
     @property
     def region_code(self):
@@ -141,6 +172,10 @@ class Meal:
         return self._school_name
 
     @property
+    def date(self):
+        return self._date
+
+    @property
     def breakfast(self):
         return self._breakfast
 
@@ -151,6 +186,3 @@ class Meal:
     @property
     def dinner(self):
         return self._dinner
-
-    def get_school(self):
-        return
