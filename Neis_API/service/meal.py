@@ -90,6 +90,38 @@ class MealInfo:
         return self._nutrition
 
 
+class Meals:
+    _meals_date: dict
+    _meals: list
+
+    def __init__(self, meals):
+        self._c = 0
+        self._meals_date = meals
+        self._meals = list(meals.values())
+
+    def __iter__(self):
+        self._c = 0
+        return self
+
+    def __next__(self):
+        if self._c < len(self._meals_date):
+            meal = self._meals[self._c]
+            self._c += 1
+            return meal
+        else:
+            raise StopIteration
+
+    def __len__(self):
+        return len(self._meals)
+
+    def get_meal(self, date):
+        return self._meals_date[date]
+
+    @property
+    def meals(self):
+        return self._meals
+
+
 class Meal:
     _region_code: str
     _school_code: str
@@ -110,7 +142,7 @@ class Meal:
         self._lunch = MealInfo({})
         self._dinner = MealInfo({})
 
-        if len(meals):
+        if meals:
             self._exist = True
 
             meal = meals[0]
@@ -149,8 +181,11 @@ class Meal:
             else:
                 meal_date[date] = []
 
-        meals = list(map(lambda x: Meal(x), meal_date.values()))
-        return meals
+        meals = {}
+        for k, v in meal_date.items():
+            meals[k] = Meal(v)
+
+        return Meals(meals=meals)
 
     def is_exist(self):
         """오늘이 급식일 인가?"""
