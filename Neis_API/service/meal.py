@@ -1,5 +1,7 @@
 from Neis_API.service.request import get_request
 
+from Neis_API.service.exceptions import UnknownMealCodeError
+
 __SERVICE_NAME__ = "mealServiceDietInfo"
 __URL__ = "https://open.neis.go.kr/hub/mealServiceDietInfo"
 
@@ -35,6 +37,7 @@ class MealInfo:
 
     def __init__(self, meal):
         # self.meal = meal
+        self._c = 0
 
         if meal:
             self._exist = True
@@ -45,6 +48,18 @@ class MealInfo:
             self._origin = meal['ORPLC_INFO']  # 원산지
             self._calory = meal['CAL_INFO']  # 칼로리
             self._nutrition = meal['NTR_INFO']  # 영양정보
+
+    def __iter__(self):
+        self._c = 0
+        return self
+
+    def __next__(self):
+        if self._c < len(self.dish):
+            dish = self.dish[self._c]
+            self._c += 1
+            return dish
+        else:
+            raise StopIteration
 
     def is_exist(self):
         return self._exist
@@ -115,7 +130,9 @@ class Meals:
         return len(self._meals)
 
     def get_meal(self, date):
-        return self._meals_date[date]
+        if date in self._meals_date:
+            return self._meals_date[date]
+        return
 
     @property
     def meals(self):
@@ -161,6 +178,8 @@ class Meal:
                     self._lunch = meal_info
                 elif meal_code == "3":
                     self._dinner = meal_info
+                else:
+                    UnknownMealCodeError(meal_code=meal_code)
 
     @classmethod
     def meal_date(cls, region: str, school_code: str, date: str):
