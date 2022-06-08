@@ -67,43 +67,73 @@ class MealInfo:
 
     @property
     def dish(self) -> list:
-        return self._dish.split("\n")
+        try:
+            return self._dish.split("\n")
+        except AttributeError:
+            return []
 
     @property
     def dishs(self) -> str:
-        return self._dish
+        try:
+            return self._dish
+        except AttributeError:
+            return ""
 
     @property
     def type(self):
-        return self._type
+        try:
+            return self._type
+        except AttributeError:
+            return None
 
     @property
     def population(self):
-        return self._population
+        try:
+            return self._population
+        except AttributeError:
+            return None
 
     @property
     def origin(self):
-        return self._origin.split("\n")
+        try:
+            return self._origin.split("\n")
+        except AttributeError:
+            return []
 
     @property
     def origins(self):
-        return self._origin
+        try:
+            return self._origin
+        except AttributeError:
+            return ""
 
     @property
     def calory(self):
-        return self._calory.split("\n")
+        try:
+            return self._calory.split("\n")
+        except AttributeError:
+            return []
 
     @property
     def calorys(self):
-        return self._calory
+        try:
+            return self._calory
+        except AttributeError:
+            return ""
 
     @property
     def nutrition(self):
-        return self._nutrition.split("\n")
+        try:
+            return self._nutrition.split("\n")
+        except AttributeError:
+            return []
 
     @property
     def nutritions(self):
-        return self._nutrition
+        try:
+            return self._nutrition
+        except AttributeError:
+            return ""
 
 
 class Meals:
