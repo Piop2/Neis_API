@@ -153,7 +153,9 @@ class Meal:
     _dinner: MealInfo
 
     def __init__(self, meals: list):
-        # self.meals = meals
+        # self._meals = meals
+
+        self._c = 0
 
         self._exist = False
         self._breakfast = MealInfo({})
@@ -241,3 +243,24 @@ class Meal:
     @property
     def dinner(self):
         return self._dinner
+
+    def __len__(self):
+        """존재하는 급식의 개수"""
+        n = 0
+        for meal in [self._breakfast, self._lunch, self._dinner]:
+            if meal.is_exist():
+                n += 1
+        return n
+
+    def __iter__(self):
+        self._c = 0
+        return self
+
+    def __next__(self):
+        meals = [self._breakfast, self._lunch, self._dinner]
+        if self._c < len(meals):
+            meal = meals[self._c]
+            self._c += 1
+            return meal
+        else:
+            raise StopIteration
