@@ -6,8 +6,8 @@ import Neis_API.service
 urllib3.disable_warnings()
 
 # service
-info = service.info.Info
-meal = service.meal.Meal
+info = service.info
+meal = service.meal
 schedule = service.schedule
 
 # School = Neis_API.school.School

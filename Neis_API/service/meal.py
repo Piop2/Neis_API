@@ -26,6 +26,31 @@ def _get_meals(region=None, school_code=None, meal_code=None, date=None, start_d
     return get_request(url=URL, service_name=SERVICE_NAME, params=params)
 
 
+def meal_date(region: str, school_code: str, date: str):
+    resp = _get_meals(region=region, school_code=school_code, date=date)
+    return Meal(resp)
+
+
+def meal_daterange(region: str, school_code: str, start: str, end: str):
+    resp = _get_meals(region=region, school_code=school_code, start_date=start, end_date=end)
+
+    # date of meal: MLSV_YMD
+
+    meal_dates: dict[str:list[dict]] = {}
+    for r in resp:
+        date = r['MLSV_YMD']
+        if date in meal_dates:
+            meal_dates[date].append(r)
+        else:
+            meal_dates[date] = []
+
+    meals = {}
+    for k, v in meal_dates.items():
+        meals[k] = Meal(v)
+
+    return Meals(meals=meals)
+
+
 class MealInfo:
     _type: str
     _population: str
@@ -213,31 +238,6 @@ class Meal:
                     self._dinner = meal_info
                 else:
                     UnknownMealCodeError(meal_code=meal_code)
-
-    @classmethod
-    def meal_date(cls, region: str, school_code: str, date: str):
-        resp = _get_meals(region=region, school_code=school_code, date=date)
-        return cls(resp)
-
-    @classmethod
-    def meal_daterange(cls, region: str, school_code: str, start: str, end: str):
-        resp = _get_meals(region=region, school_code=school_code, start_date=start, end_date=end)
-
-        # date of meal: MLSV_YMD
-
-        meal_date: dict[str:list[dict]] = {}
-        for r in resp:
-            date = r['MLSV_YMD']
-            if date in meal_date:
-                meal_date[date].append(r)
-            else:
-                meal_date[date] = []
-
-        meals = {}
-        for k, v in meal_date.items():
-            meals[k] = Meal(v)
-
-        return Meals(meals=meals)
 
     def is_exist(self):
         """오늘이 급식일 인가?"""
