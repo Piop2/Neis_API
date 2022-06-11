@@ -62,6 +62,9 @@ class MealInfo:
         else:
             raise StopIteration
 
+    def __str__(self):
+        return self.dishs
+
     def is_exist(self):
         return self._exist
 
