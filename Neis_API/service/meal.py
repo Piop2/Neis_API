@@ -53,7 +53,7 @@ def meal_daterange(region: str, school_code: str, start: str, end: str):
 
 class MealInfo:
     _type: str
-    _population: str
+    _population: int
     _dish: str
     _origin: str
     _calory: str
@@ -69,7 +69,7 @@ class MealInfo:
             self._exist = True
 
             self._type = meal['MMEAL_SC_NM']  # 식사 종류
-            self._population = meal['MLSV_FGR']  # 급식 인원 수
+            self._population = int(meal['MLSV_FGR'])  # 급식 인원 수
             self._dish = meal['DDISH_NM']  # 식단
             self._origin = meal['ORPLC_INFO']  # 원산지
             self._calory = meal['CAL_INFO']  # 칼로리
@@ -86,6 +86,9 @@ class MealInfo:
             return dish
         else:
             raise StopIteration
+
+    def __str__(self):
+        return self.dishs
 
     def is_exist(self):
         return self._exist
@@ -105,56 +108,56 @@ class MealInfo:
             return ""
 
     @property
-    def type(self):
+    def type(self) -> str:
         try:
             return self._type
         except AttributeError:
-            return None
+            return ""
 
     @property
-    def population(self):
+    def population(self) -> int:
         try:
             return self._population
         except AttributeError:
-            return None
+            return 0
 
     @property
-    def origin(self):
+    def origin(self) -> list:
         try:
             return self._origin.split("\n")
         except AttributeError:
             return []
 
     @property
-    def origins(self):
+    def origins(self) -> str:
         try:
             return self._origin
         except AttributeError:
             return ""
 
     @property
-    def calory(self):
+    def calory(self) -> list:
         try:
             return self._calory.split("\n")
         except AttributeError:
             return []
 
     @property
-    def calorys(self):
+    def calorys(self) -> str:
         try:
             return self._calory
         except AttributeError:
             return ""
 
     @property
-    def nutrition(self):
+    def nutrition(self) -> list:
         try:
             return self._nutrition.split("\n")
         except AttributeError:
             return []
 
     @property
-    def nutritions(self):
+    def nutritions(self) -> str:
         try:
             return self._nutrition
         except AttributeError:
