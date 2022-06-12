@@ -21,19 +21,19 @@ jobs:
     - name: Build package
       run: python -m build
     - name: Upload wheel to Artifacts
-      if: github.event.name == 'push'
+      if: github.event_name == 'push'
       uses: actions/upload-artifact@v3
       with:
         name: 'Neis_API_dev_wheel'
         path: 'dist/*.whl'
     - name: Upload source to Artifacts
-      if: github.event.name == 'push'
+      if: github.event_name == 'push'
       uses: actions/upload-artifact@v3
       with:
         name: 'Neis_API_dev_source'
         path: 'dist/*.tar.gz'
     - name: Upload wheel to Releases
-      if: github.event.name == 'release'
+      if: github.event_name == 'release'
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
@@ -41,7 +41,7 @@ jobs:
         tag: ${{ github.ref }}
         file_glob: true
     - name: Upload source to Releases
-      if: github.event.name == 'release'
+      if: github.event_name == 'release'
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
