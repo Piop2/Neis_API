@@ -90,6 +90,9 @@ class MealInfo:
     def __str__(self):
         return self.dishs
 
+    def __bool__(self):
+        return self._exist
+
     def is_exist(self):
         return self._exist
 
