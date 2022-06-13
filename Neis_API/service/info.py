@@ -49,15 +49,17 @@ def get_school_data(region_code=None, school_code=None, school_name=None, school
     return tuple(SchoolInfo(data) for data in request_json["schoolInfo"][1]["row"])
 
 def get_school_website_link(school_name):
-    html = requests.get(f"https://www.google.com/search?q={school_name}")
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36'}
+    html = requests.get(f"https://www.google.com/search?q={school_name}", headers=headers)
     soup = BeautifulSoup(html.content, "html.parser")
-    first_result = soup.find_all("div", "yuRUbf")
-    school_link = ""
-    return str(soup)
+    first_result = soup.select_one(".yuRUbf")
+    first_results = str(first_result).split('href="')
+    return first_results[1].split('"')[0]
 
 class SchoolInfo:
     def __init__(self, school_data):
         self.data = school_data
+        self.school_website_link = get_school_website_link(school_data["SCHUL_NM"])
 
     @property
     def region_code(self):
@@ -155,7 +157,7 @@ class SchoolInfo:
         """
         :return: 홈페이지주소
         """
-        return self.data["HMPG_ADRES"]
+        return self.school_website_link
 
     @property
     def coedu(self):
