@@ -49,11 +49,11 @@ def get_school_data(region_code=None, school_code=None, school_name=None, school
     return tuple(SchoolInfo(data) for data in request_json["schoolInfo"][1]["row"])
 
 def get_school_website_link(school_name):
-    html = requests.get(f"https://www.google.com/search?q={school_name}").text
-    soup = BeautifulSoup(html, "html.parser")
-    first_result = soup.select_one("div.yuRUbf")
+    html = requests.get(f"https://www.google.com/search?q={school_name}")
+    soup = BeautifulSoup(html.content, "html.parser")
+    first_result = soup.find_all("div", "yuRUbf")
     school_link = ""
-    return first_result
+    return str(soup)
 
 class SchoolInfo:
     def __init__(self, school_data):
