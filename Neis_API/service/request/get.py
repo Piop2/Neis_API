@@ -1,5 +1,7 @@
 import json
 import requests
+import urllib3, ssl
+from bs4 import BeautifulSoup
 
 from Neis_API.service.request.errors import *
 
@@ -16,6 +18,18 @@ def get_request(url, service_name, params):
 
     return _get_row_data(request=request, service_name=service_name)
 
+def crawl_website(url):
+    try:
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36'}
+        html = requests.get(str(url), headers=headers)
+        content = BeautifulSoup(html.content, "html.parser")
+    except:
+        ctx = ssl.create_default_context()
+        ctx.set_ciphers('DEFAULT@SECLEVEL=1')
+        http = urllib3.PoolManager(ssl_version=ssl.PROTOCOL_TLS, ssl_context=ctx)
+        html = http.request("GET", url, preload_content=False).read()
+        content = BeautifulSoup(html, "html.parser")
+    return content
 
 def _loads_json(json_s):
     return json.loads(s=json_s, strict=False)

@@ -1,5 +1,5 @@
 import requests
-from Neis_API.service.request import get_request
+from Neis_API.service.request import get_request, crawl_website
 from bs4 import BeautifulSoup
 
 URL = "https://open.neis.go.kr/hub/schoolInfo"
@@ -49,12 +49,17 @@ def get_school_data(region_code=None, school_code=None, school_name=None, school
     return tuple(SchoolInfo(data) for data in request_json["schoolInfo"][1]["row"])
 
 def get_school_website_link(school_name: str) -> str:
-    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36'}
-    html = requests.get(f"https://www.google.com/search?q={school_name}", headers=headers)
-    soup = BeautifulSoup(html.content, "html.parser")
-    first_result = soup.select_one(".yuRUbf")
-    first_results = str(first_result).split('href="')
-    return first_results[1].split('"')[0]
+    school_link = ""
+    while True:
+        soup = crawl_website(f"https://www.google.com/search?q={school_name}")
+        first_result = soup.select_one(".yuRUbf")
+        first_results = str(first_result).split('href="')
+        school_link = first_results[1].split('"')[0]
+        if "wiki" in school_link:
+            pass
+        else:
+            break
+    return school_link
 
 class SchoolInfo:
     def __init__(self, school_data):
