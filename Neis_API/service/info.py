@@ -48,7 +48,7 @@ def get_school_data(region_code=None, school_code=None, school_name=None, school
 
     return tuple(SchoolInfo(data) for data in request_json["schoolInfo"][1]["row"])
 
-def get_school_website_link(school_name):
+def get_school_website_link(school_name: str) -> str:
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36'}
     html = requests.get(f"https://www.google.com/search?q={school_name}", headers=headers)
     soup = BeautifulSoup(html.content, "html.parser")
