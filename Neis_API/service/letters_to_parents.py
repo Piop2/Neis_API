@@ -12,7 +12,6 @@ class letters_to_parents:
         self.letter_link = ""
         self.soup = crawl_website(self.school_link)
         self.links = self.soup.select('a')
-        print(self.soup)
         for link in self.links:
             if link.get_text() == "가정통신문":
                 self.letter_link = link['href']
