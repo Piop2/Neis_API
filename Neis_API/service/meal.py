@@ -28,7 +28,7 @@ def _get_meals(region=None, school_code=None, meal_code=None, date=None, start_d
 
 def meal_date(region: str, school_code: str, date: str):
     resp = _get_meals(region=region, school_code=school_code, date=date)
-    return Meal(resp)
+    return _Meal(resp)
 
 
 def meal_daterange(region: str, school_code: str, start: str, end: str):
@@ -46,12 +46,12 @@ def meal_daterange(region: str, school_code: str, start: str, end: str):
 
     meals = {}
     for k, v in meal_dates.items():
-        meals[k] = Meal(v)
+        meals[k] = _Meal(v)
 
-    return Meals(meals=meals)
+    return _Meals(meals=meals)
 
 
-class MealInfo:
+class _MealInfo:
     _type: str
     _population: int
     _dish: str
@@ -167,7 +167,7 @@ class MealInfo:
             return ""
 
 
-class Meals:
+class _Meals:
     _meals_date: dict
     _meals: list
 
@@ -201,7 +201,7 @@ class Meals:
         return self._meals
 
 
-class Meal:
+class _Meal:
     _region_code: str
     _school_code: str
     _school_name: str
@@ -209,9 +209,9 @@ class Meal:
 
     _exist: bool
 
-    _breakfast: MealInfo
-    _lunch: MealInfo
-    _dinner: MealInfo
+    _breakfast: _MealInfo
+    _lunch: _MealInfo
+    _dinner: _MealInfo
 
     def __init__(self, meals: list):
         # self._meals = meals
@@ -219,9 +219,9 @@ class Meal:
         self._c = 0
 
         self._exist = False
-        self._breakfast = MealInfo({})
-        self._lunch = MealInfo({})
-        self._dinner = MealInfo({})
+        self._breakfast = _MealInfo({})
+        self._lunch = _MealInfo({})
+        self._dinner = _MealInfo({})
 
         if meals:
             self._exist = True
@@ -233,7 +233,7 @@ class Meal:
             self._date = meal['MLSV_YMD']
 
             for meal in meals:
-                meal_info = MealInfo(meal)
+                meal_info = _MealInfo(meal)
 
                 meal_code = meal['MMEAL_SC_CODE']
                 if meal_code == "1":
