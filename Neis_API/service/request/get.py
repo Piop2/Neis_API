@@ -21,7 +21,7 @@ def get_request(url, service_name, params):
 def crawl_website(url):
     try:
         headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36'}
-        html = requests.get(str(url), headers=headers)
+        html = requests.get(str(url), headers=headers, allow_redirects=True)
         content = BeautifulSoup(html.content, "html.parser")
     except:
         ctx = ssl.create_default_context()

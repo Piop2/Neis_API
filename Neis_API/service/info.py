@@ -50,13 +50,15 @@ def get_school_data(region_code=None, school_code=None, school_name=None, school
 
 def get_school_website_link(school_name: str) -> str:
     school_link = ""
-    while True:
+    limit = 10
+    while limit >= 0:
         soup = crawl_website(f"https://www.google.com/search?q={school_name}")
         first_result = soup.select_one(".yuRUbf")
         first_results = str(first_result).split('href="')
         school_link = first_results[1].split('"')[0]
         if "wiki" in school_link:
-            pass
+            limit -= 1
+            school_link = ""
         else:
             break
     return school_link
