@@ -73,7 +73,8 @@ class letters_to_parents:
         가정통신문이나 공지사항들의 제목을 받아옵니다.
         :return:
         """
-        if self.letter_link == "":
+        if (self.letter_link and self.notification_link) == "":
             self.letter_link = self.get_letter_link()
-        self.soup = crawl_website(self.letter_link)
+        self.content = requests.get(self.school_link + "dggb/module/board/selectBoardListAjax.do", headers={"Referer": self.letter_link}, cookies={"WMONID": "5IO1s4GUsr5", "JSESSIONID": "0ajWJnhY0BzFNN8aLEGKvzIUoIaVY4HgTiVI25zJ8g1BGwyA7n8Zvne1ZL2Tq1Lu.hostingwas1_servlet_engine4"})
+        self.soup = BeautifulSoup(self.content.content, 'html.parser')
         print(self.soup.prettify())
