@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
-from Neis_API.service.info import get_school_website_link
-from Neis_API.service.request import crawl_website
+from KSchool.website_crawl.get import get_school_website_link
+from KSchool.website_crawl.get import crawl_website
 
 
 class letters_to_parents:

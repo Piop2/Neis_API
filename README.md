@@ -40,7 +40,7 @@ pip install [.whl 파일 경로 및 이름]
 ### 급식 메뉴 받아오기
 
 ```python
-import Neis_API
+import KSchool
 
 data = Neis_API.meal.meal_date(region=Neis_API.R_SEOUL, school_code="7010080", date="20220613")
 print(data.lunch)

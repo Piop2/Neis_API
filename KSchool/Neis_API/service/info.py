@@ -1,6 +1,4 @@
 import requests
-from Neis_API.service.request import get_request, crawl_website
-from bs4 import BeautifulSoup
 
 URL = "https://open.neis.go.kr/hub/schoolInfo"
 
@@ -48,25 +46,9 @@ def get_school_data(region_code=None, school_code=None, school_name=None, school
 
     return tuple(SchoolInfo(data) for data in request_json["schoolInfo"][1]["row"])
 
-def get_school_website_link(school_name: str) -> str:
-    school_link = ""
-    limit = 10
-    while limit >= 0:
-        soup = crawl_website(f"https://www.google.com/search?q={school_name}")
-        first_result = soup.select_one(".yuRUbf")
-        first_results = str(first_result).split('href="')
-        school_link = first_results[1].split('"')[0]
-        if "wiki" in school_link:
-            limit -= 1
-            school_link = ""
-        else:
-            break
-    return school_link
-
 class SchoolInfo:
     def __init__(self, school_data):
         self.data = school_data
-        self.school_website_link = get_school_website_link(school_data["SCHUL_NM"])
 
     @property
     def region_code(self):
@@ -164,7 +146,7 @@ class SchoolInfo:
         """
         :return: 홈페이지주소
         """
-        return self.school_website_link
+        return self.data["HMPG_ADRES"]
 
     @property
     def coedu(self):
