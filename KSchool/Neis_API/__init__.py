@@ -6,6 +6,3 @@ from KSchool.Neis_API.service import *
 info = service.info
 meal = service.meal
 schedule = service.schedule
-
-
-del KSchool

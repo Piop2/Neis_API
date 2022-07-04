@@ -4,7 +4,7 @@ from KSchool.website_crawl.get import get_school_website_link
 from KSchool.website_crawl.get import crawl_website
 
 
-class letters_to_parents:
+class Letters:
     """
     학교 사이트 크롤링으로 가정통신문이나 공지사항을 받아옵니다.
     메인화면 가정통신문, 공지사항으로 가는 바로가기 버튼이 없을경우 받아오는 것이 원할하지 않을 수 있습니다.
