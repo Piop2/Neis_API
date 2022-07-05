@@ -1,10 +1,10 @@
 import requests
 from bs4 import BeautifulSoup
-from Neis_API.service.info import get_school_website_link
-from Neis_API.service.request import crawl_website
+from KSchool.website_crawl.get import get_school_website_link
+from KSchool.website_crawl.get import crawl_website
 
 
-class letters_to_parents:
+class Letters:
     """
     학교 사이트 크롤링으로 가정통신문이나 공지사항을 받아옵니다.
     메인화면 가정통신문, 공지사항으로 가는 바로가기 버튼이 없을경우 받아오는 것이 원할하지 않을 수 있습니다.
@@ -15,16 +15,18 @@ class letters_to_parents:
         self.notification_link = ""
         self.exception_pass = False
 
+
     def get_letter_link(self, get_letters: bool = True, get_notifications: bool = False) -> str:
         """
-        :param get_letters:가정통신문을 받아을지의 여부
-        :param get_notifications:공지사항을 받아을지의 여부
-        :return:
+        가정통신문/공지사항 사이트의 링크를 받아오는 함수
+
+        :param get_letters: 가정통신문을 받아을지의 여부
+        :param get_notifications: 공지사항을 받아을지의 여부
+        :return: str
         """
         self.get_letters = get_letters
         self.get_notifications = get_notifications
         self.soup = crawl_website(self.school_link)
-        print(self.school_link)
         self.links = self.soup.select('a')
         if get_letters:
             for link in self.links:
@@ -48,10 +50,14 @@ class letters_to_parents:
         else:
             return ""
 
+
     def link_exceptions(self) -> None:
-        # print(self.school_link)
-        # print(self.letter_link)
-        # print(self.notification_link)
+        """
+        링크 예외 처리 함수(전국의 모든? 학교들에 맞춰 예외를 처리할 예정)
+        get_letter_link 함수에 귀속
+
+        :return:
+        """
         if (self.letter_link or self.notification_link).startswith("/" + self.school_link.split("/")[-1]): #충청복도학교통합홈페이지 예외 처리
             self.letter_link = self.letter_link[len(self.school_link.split("/")[-1]):]
         if self.soup.select('a') == []: #아직 문제 많은 예외처리(학교 사이트들 다 왜이래)
@@ -68,10 +74,12 @@ class letters_to_parents:
         else:
             self.notification_link = self.school_link[:-1] + self.notification_link
 
+
     def get_letter_titles(self) -> list:
         """
-        가정통신문이나 공지사항들의 제목을 받아옵니다.
-        :return:
+        가정통신문이나 공지사항들의 제목들을 받아오는 함수
+
+        :return: list
         """
         if (self.letter_link and self.notification_link) == "":
             self.letter_link = self.get_letter_link()

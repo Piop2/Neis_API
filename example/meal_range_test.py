@@ -1,4 +1,4 @@
-import Neis_API
+import KSchool
 
 meals = Neis_API.meal.meal_daterange(region=Neis_API.R_SEOUL, school_code="7010083", start="20220530", end="20220531")
 for meal in meals:

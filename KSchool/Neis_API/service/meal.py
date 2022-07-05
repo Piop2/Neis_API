@@ -1,8 +1,8 @@
-from Neis_API.school import School
+from KSchool.Neis_API.school import School
 
-from Neis_API.service.request import get_request
+from KSchool.Neis_API.service.request import get_request
 
-from Neis_API.service.exceptions import UnknownMealCodeError
+from KSchool.Neis_API.service.exceptions import UnknownMealCodeError
 
 SERVICE_NAME = "mealServiceDietInfo"
 URL = "https://open.neis.go.kr/hub/mealServiceDietInfo"

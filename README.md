@@ -37,12 +37,13 @@ pip install [.whl 파일 경로 및 이름]
 
 # 예제
 
-### 급식 메뉴 받아오기
+### 급식 메뉴 받아오기(Neis_API)
 
 ```python
-import Neis_API
+from KSchool import Neis_API
 
-data = Neis_API.meal.meal_date(region=Neis_API.R_SEOUL, school_code="7010080", date="20220613")
+
+data = Neis_API.meal.meal_date(region=Neis_API.R_SEOUL, school_code="7010080", date="20220701")
 print(data.lunch)
 ```
 
